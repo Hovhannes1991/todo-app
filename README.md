@@ -34,7 +34,7 @@ npm run build
 
 ### Live Demo
 
-not available yet
+[https://todo-list-manager-app.vercel.app/](https://todo-list-manager-app.vercel.app/)
 
 
 ### Github URL
