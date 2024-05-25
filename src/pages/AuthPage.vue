@@ -51,11 +51,11 @@ export default {
       show_password: false,
 
       user: {
-        firstname: "Hovo",
-        lastname: "K",
-        email: "hovok@mail.com",
-        password: "11111111",
-        confirm_password: "11111111"
+        firstname: "",
+        lastname: "",
+        email: "",
+        password: "",
+        confirm_password: ""
       },
 
       backend_errors: {}
