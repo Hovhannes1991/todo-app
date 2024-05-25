@@ -5,7 +5,7 @@ import {clearTokens, getTokens, saveTokens} from "@/helpers/storage.js";
 
 const MODE = import.meta.env.MODE
 
-const BASE_URL_PROD = 'https://find-numbers-backend.vercel.app/';
+const BASE_URL_PROD = 'https://todo-app-manager-backend.vercel.app/';
 const BASE_URL_DEV = 'http://localhost:4000/';
 const BASE_URL = MODE === "development" ? BASE_URL_DEV : BASE_URL_PROD;
 axios.defaults.baseURL = BASE_URL;
