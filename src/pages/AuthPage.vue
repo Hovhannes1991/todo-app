@@ -15,7 +15,7 @@
               @on-icon-click="handleIconClick(input.onIconClick)"
               :placeholder="input.placeholder"
               :type="input.type"
-              :icon="input.icon || 'search'"
+              :icon="input.icon"
               :error="errorMessages[input.name]"
               :tab-index="input.tab_index"
               :key="input.name"/>
@@ -163,6 +163,7 @@ export default {
 
     changeSection(section) {
       this.selected_section = section;
+      this.backend_errors = {}
       setGetAuthPageSection(section);
     },
 
@@ -191,6 +192,7 @@ export default {
 
     removeBackendError(name) {
       this.backend_errors[name] = null;
+      if (name === "password") this.backend_errors.email = null;
     },
 
     handleBackendErrors(err) {

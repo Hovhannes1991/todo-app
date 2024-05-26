@@ -128,7 +128,6 @@ export default {
                        :icon="icon"
                        :style="iconStyles"
                        :spin="spinIcon"
-                       tabindex="0"
                        :class="{'cursor-pointer': icon_clickable}"/>
     </div>
     <span v-if="error" class="error-message">{{ error }}</span>

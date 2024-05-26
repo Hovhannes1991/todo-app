@@ -1,7 +1,7 @@
 <script>
 import {mapGetters, mapMutations} from "vuex";
 import {toast} from "vue3-toastify";
-import {getUserTodos, addTodo} from "@/services/todos.service.js";
+import {getUserTodos, addTodo, deleteTodo} from "@/services/todos.service.js";
 import TodoListSearchAndFilter from "@/components/TodoList/TodoListSearchAndFilter.vue";
 import TodoListItem from "@/components/TodoList/TodoListItem.vue";
 import TodoListNewItem from "@/components/TodoList/TodoListNewItem.vue";
@@ -43,7 +43,12 @@ export default {
   },
 
   methods: {
-    ...mapMutations({setTodos: "todos/SET_TODOS", addTodo: "todos/ADD_TODO"}),
+    ...mapMutations({
+      setTodos: "todos/SET_TODOS",
+      addTodo: "todos/ADD_TODO",
+      updateTodo: "todos/UPDATE_TODO",
+      deleteTodo: "todos/DELETE_TODO"
+    }),
     async fetchUserTodos() {
       this.loading = true;
       try {
@@ -67,6 +72,21 @@ export default {
       this.add_todo_loading = false;
     },
 
+    async onDeleteTodo(id) {
+      try {
+        this.updateTodo({id, updated_props: {disabled: true}});
+        const {data} = await deleteTodo(id);
+        this.deleteTodo({id});
+        toast.success(data.message);
+      } catch (err) {
+        console.log(err)
+      }
+    },
+
+    async onEditTodo(id) {
+      //todo
+    },
+
     onSearchChange(value) {
       this.search = value;
     },
@@ -84,7 +104,11 @@ export default {
         <template v-if="!loading">
           <TodoListEmptyResults v-if="!todosToShow.length" :search-text="search"/>
 
-          <TodoListItem v-for="todo in todosToShow" :todo="todo" :key="todo._id"/>
+          <TodoListItem v-for="todo in todosToShow"
+                        :todo="todo"
+                        @delete-todo="onDeleteTodo"
+                        @edit-todo="onEditTodo"
+                        :key="todo._id"/>
         </template>
       </div>
     </div>
@@ -99,11 +123,11 @@ export default {
   justify-content: center;
 
   .todo-list-container {
-    width: 100%;
-    max-width: 45rem;
+    width: 45rem;
+    max-width: 90vw;
     max-height: 70rem;
     padding: 0;
-    margin: 0 1rem;
+    margin: 0 auto;
     background-color: #151515;
     border-radius: 2rem 2rem 1rem 1rem;
     overflow: hidden;
@@ -118,6 +142,10 @@ export default {
       scrollbar-width: thin;
       scrollbar-color: #0AB6AB #28313b;
       padding: 0.8rem 2rem;
+
+      @media only screen and (max-width: 300px) {
+        padding: 0 0.5rem;
+      }
     }
   }
 }

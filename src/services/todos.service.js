@@ -10,3 +10,11 @@ export const toggleTodo = (id) => {
 export const addTodo = (todo) => {
     return axios.post("/todo/add", {title: todo})
 }
+
+export const deleteTodo = (id) => {
+    return axios.delete("/todo/delete?id=" + id)
+}
+
+export const editTodo = (id) => {
+    //
+}

@@ -16,13 +16,17 @@ export const todos_store = {
             state.todos = [...state.todos, todo];
         },
 
-        [types.TOGGLE_COMPLETED_STATUS](state, {id}) {
+        [types.UPDATE_TODO](state, {id, updated_props}) {
             const todos = [...state.todos];
             const index = todos.findIndex(todo => todo._id === id);
             if (index === -1) return;
 
-            todos[index] = {...todos[index], completed: !todos[index].completed}
+            todos[index] = {...todos[index], ...updated_props}
             state.todos = todos;
+        },
+
+        [types.DELETE_TODO](state, {id}) {
+            state.todos = [...state.todos].filter(todo => todo._id !== id);
         }
     },
 
