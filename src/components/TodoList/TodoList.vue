@@ -1,17 +1,19 @@
 <script>
 import {mapGetters, mapMutations} from "vuex";
 import {toast} from "vue3-toastify";
-import {getUserTodos, addTodo, deleteTodo} from "@/services/todos.service.js";
+import {getUserTodos, addTodo, editTodo, deleteTodo} from "@/services/todos.service.js";
 import TodoListSearchAndFilter from "@/components/TodoList/TodoListSearchAndFilter.vue";
 import TodoListItem from "@/components/TodoList/TodoListItem.vue";
 import TodoListNewItem from "@/components/TodoList/TodoListNewItem.vue";
 import SkeletonListLoader from "@/ui/SkeletonListLoader.vue";
 import TodoListEmptyResults from "@/components/TodoList/TodoListEmptyResults.vue";
 import BaseInput from "@/ui/BaseInput.vue";
+import TodoListItemEdit from "@/components/TodoList/TodoListItemEdit.vue";
 
 export default {
   name: "TodoList",
   components: {
+    TodoListItemEdit,
     BaseInput, TodoListEmptyResults, SkeletonListLoader, TodoListSearchAndFilter, TodoListNewItem, TodoListItem
   },
 
@@ -24,6 +26,7 @@ export default {
 
       loading: false,
       add_todo_loading: false,
+      updating_todo: false,
     }
   },
 
@@ -83,8 +86,25 @@ export default {
       }
     },
 
-    async onEditTodo(id) {
-      //todo
+    onStartEditTodo(todo) {
+      this.$refs.edit_todo_modal.openModal(todo);
+    },
+
+    async onSaveEdit(todo) {
+      try {
+        this.updating_todo = true;
+        const {data} = await editTodo(todo);
+        this.updateTodo({id: todo._id, updated_props: todo});
+        this.$refs.edit_todo_modal.closeModal();
+        toast.success(data.message);
+      } catch (err) {
+        console.log(err);
+      }
+      this.updating_todo = true;
+    },
+
+    onCancelEdit() {
+      this.$refs.edit_todo_modal.closeModal();
     },
 
     onSearchChange(value) {
@@ -107,10 +127,15 @@ export default {
           <TodoListItem v-for="todo in todosToShow"
                         :todo="todo"
                         @delete-todo="onDeleteTodo"
-                        @edit-todo="onEditTodo"
+                        @edit-todo="onStartEditTodo"
                         :key="todo._id"/>
         </template>
       </div>
+
+      <TodoListItemEdit ref="edit_todo_modal"
+                        @cancel-editing="onCancelEdit"
+                        @save-todo="onSaveEdit"
+                        :updating="updating_todo"/>
     </div>
   </main>
 </template>

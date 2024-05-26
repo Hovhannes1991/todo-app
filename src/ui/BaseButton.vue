@@ -142,8 +142,8 @@ $text-color: #FFF;
 
 
   .loader {
-    width: 3.2rem;
-    height: 3.2rem;
+    width: 2.5rem;
+    height: 2.5rem;
     border: 3px solid #FFF;
     border-bottom-color: transparent;
     border-radius: 50%;

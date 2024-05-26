@@ -31,8 +31,8 @@ export default {
       this.$emit("deleteTodo", id);
     },
 
-    editTodo(id) {
-      this.$emit("editTodo", id);
+    editTodo(todo) {
+      this.$emit("editTodo", todo);
     }
   }
 }
@@ -59,10 +59,10 @@ export default {
 
     <div class="todo-list-item__buttons">
       <span class="edit-todo-icon">
-        <FontAwesomeIcon @click="editTodo" icon="pen-to-square"/>
+        <FontAwesomeIcon @click="editTodo(todo)" icon="pen-to-square"/>
       </span>
       <span class="delete-todo-icon">
-        <FontAwesomeIcon @click="deleteTodo(this.todo._id)" icon="trash-can"/>
+        <FontAwesomeIcon @click="deleteTodo(todo._id)" icon="trash-can"/>
       </span>
     </div>
   </div>
@@ -71,8 +71,8 @@ export default {
 
 <style scoped lang="scss">
 .todo-list-item {
-  position: relative;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto;
   gap: 0.8rem;
   align-items: center;
   border: 2px solid transparent;
@@ -98,7 +98,7 @@ export default {
   }
 
   label {
-    width: 100%;
+    overflow: hidden;
     display: flex;
     align-items: center;
     cursor: pointer;

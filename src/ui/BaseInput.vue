@@ -114,6 +114,7 @@ export default {
     <div class="input-container">
       <input
           @input="onInput($event.target.value)"
+          ref="input_ref"
           :class="classNames"
           :value="modelValue"
           :type="type"
