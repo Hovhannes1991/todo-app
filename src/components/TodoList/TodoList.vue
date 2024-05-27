@@ -100,11 +100,12 @@ export default {
       } catch (err) {
         console.log(err);
       }
-      this.updating_todo = true;
+      this.updating_todo = false;
     },
 
     onCancelEdit() {
       this.$refs.edit_todo_modal.closeModal();
+      this.updating_todo = false;
     },
 
     onSearchChange(value) {
