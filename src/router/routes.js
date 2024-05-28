@@ -10,7 +10,7 @@ const routes = [
     {path: '/home', name: "home", component: HomePage, meta: {middleware: ["auth"]}},
     {path: '/access-denied', name: "403", component: AccessDenied403, meta: {layout: "empty"}},
     {path: '/not-found', name: "404", component: NotFound404, meta: {layout: "empty"}},
-    {path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound404},
+    {path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound404, meta: {layout: "empty"}},
 ]
 
 export default routes;
