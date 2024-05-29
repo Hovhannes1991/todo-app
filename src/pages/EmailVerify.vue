@@ -4,6 +4,7 @@ import {emailVerify, resendToken} from "@/services/verification.service.js"
 import BaseButton from "@/ui/BaseButton.vue";
 import BaseInput from "@/ui/BaseInput.vue";
 import {toast} from "vue3-toastify";
+import {secondsToHMS} from "@/helpers/seconds-to-hms.js";
 
 export default {
   name: "EmailVerify",
@@ -24,7 +25,12 @@ export default {
   },
 
   computed: {
-    ...mapGetters({user: "auth/user"})
+    ...mapGetters({user: "auth/user"}),
+
+    formattedSendAgainCountdown() {
+      if(!this.send_again_countdown) return 0;
+      return secondsToHMS(this.send_again_countdown).mm_ss;
+    }
   },
 
   created() {
@@ -132,7 +138,7 @@ export default {
                       variant="link"
                       type="button"/>
           <p v-if="send_again_countdown">
-            You can request new token only after {{ send_again_countdown }} seconds
+            You can request new token only after {{ formattedSendAgainCountdown }}
           </p>
         </div>
       </div>
