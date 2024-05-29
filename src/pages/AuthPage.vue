@@ -36,7 +36,6 @@ import BaseInput from "@/ui/BaseInput.vue";
 import SectionSwitcher from "@/components/SectionSwitcher.vue";
 import {register, login} from "@/services/auth.service.js";
 import {saveTokens, setGetAuthPageSection, setGetPageFlushMessage} from "@/helpers/storage.js";
-import {toast} from "vue3-toastify";
 
 export default {
   name: "AuthPage",
@@ -64,7 +63,6 @@ export default {
 
   created() {
     this.setInitialSection();
-    this.showFlushMessage();
   },
 
   //vuelidate
@@ -167,13 +165,6 @@ export default {
       setGetAuthPageSection(section);
     },
 
-    showFlushMessage() {
-      const {message, type} = setGetPageFlushMessage();
-      if (message && type) {
-        toast[type](message);
-      }
-    },
-
     onSubmit() {
       this.v$.$touch();
       if (this.v$.$error) return;
@@ -205,15 +196,17 @@ export default {
     },
 
     onAuthSuccess(data) {
+      this.updateUser({user: data.user});
       saveTokens(data);
-      this.$router.push({name: "home"});
+      const redirect_route_name = data.user.email_is_verified ? "home" : "email-verify";
+      this.$router.push({name: redirect_route_name});
     },
 
     async login() {
       try {
         this.loading = true;
         const {data} = await login(this.user);
-        this.updateUser({user: {...data.user, new_legged_in: true}});
+        setGetPageFlushMessage(`Welcome ${data.user.firstname.toUpperCase()}`);
         this.onAuthSuccess(data);
       } catch (err) {
         console.log(err)
@@ -226,8 +219,7 @@ export default {
       try {
         this.loading = true;
         const {data} = await register(this.user);
-        const user_data = {...data.user, new_registered: true}
-        this.updateUser({user: user_data});
+        setGetPageFlushMessage("Congratulation, registration completed successfully!!!");
         this.onAuthSuccess(data);
       } catch (err) {
         this.handleBackendErrors(err);

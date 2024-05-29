@@ -17,7 +17,7 @@ export default {
     },
     variant: {
       validator(value) {
-        const button_variants = ["primary", "secondary", "success", "warning", "danger"];
+        const button_variants = ["primary", "secondary", "success", "warning", "danger", "link"];
         return button_variants.includes(value);
       },
       default: "primary"
@@ -129,6 +129,14 @@ $text-color: #FFF;
       background-color: darken($danger, 10%);
       border-color: darken($danger, 10%);
     }
+  }
+
+  &.link {
+    background: transparent;
+    border: none;
+    min-width: unset;
+    min-height: unset;
+    padding: 0;
   }
 
   &:disabled {

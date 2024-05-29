@@ -1,6 +1,7 @@
 import * as types from '../mutation-types';
 import {getTokens, clearTokens, saveUserData, clearUserData, setGetPageFlushMessage} from "@/helpers/storage.js";
 import {getUserByToken, logout} from "@/services/auth.service.js";
+import {UPDATE_USER_PROPERTY} from "../mutation-types";
 
 export const user_store = {
     namespaced: true,
@@ -13,6 +14,14 @@ export const user_store = {
         [types.UPDATE_USER](state, payload) {
             state.user = payload.user;
         },
+
+        [types.UPDATE_USER_PROPERTY](state, payload) {
+            const user = {...state.user}
+            for(let key in payload) {
+                user[key] = payload[key];
+            }
+            state.user = user;
+        }
     },
 
     actions: {

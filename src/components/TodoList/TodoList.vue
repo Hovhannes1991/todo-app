@@ -55,7 +55,7 @@ export default {
     async fetchUserTodos() {
       this.loading = true;
       try {
-        const {data} = await getUserTodos(this.user.id);
+        const {data} = await getUserTodos(this.user._id);
         this.setTodos(data);
       } catch (err) {
         console.log(err);

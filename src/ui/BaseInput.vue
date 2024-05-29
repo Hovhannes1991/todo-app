@@ -193,6 +193,12 @@ $error: #ef4444;
   &:disabled {
     cursor: default;
     opacity: 0.5;
+    color: black;
+
+    &:hover, &:focus {
+      border-color: black;
+      color: black;
+    }
   }
 
   &::placeholder {

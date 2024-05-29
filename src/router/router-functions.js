@@ -1,12 +1,16 @@
 import {checkAuthMiddleware} from "@/middlewares/check-auth.async.middleware.js";
 import {authMiddleware} from "@/middlewares/auth.middleware.js";
+import {emailVerificationMiddleware} from "@/middlewares/email-verification.middleware.js";
 import {guestMiddleware} from "@/middlewares/guest.middleware.js";
+import {setGetPageFlushMessage} from "@/helpers/storage.js";
+import {toast} from "vue3-toastify";
 
 const global_middlewares = [checkAuthMiddleware];
 
 const middlewares = {
     auth: authMiddleware,
-    guest: guestMiddleware
+    guest: guestMiddleware,
+    emailVerification: emailVerificationMiddleware
 }
 export const beforeEach = ((to, from, next) => {
     if (to.meta.middleware) {
@@ -34,4 +38,12 @@ function runMiddlewares(middlewares, to, from, next) {
     };
 
     _next();
+}
+
+
+export const afterEach = () => {
+    const {message, type} = setGetPageFlushMessage();
+    if (message && type) {
+        toast[type](message);
+    }
 }
