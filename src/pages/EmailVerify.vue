@@ -25,10 +25,10 @@ export default {
   },
 
   computed: {
-    ...mapGetters({user: "auth/user"}),
+    ...mapGetters({user: "auth/user", emailVerificationTokenIsSent: "helpers/emailVerificationTokenIsSent"}),
 
     formattedSendAgainCountdown() {
-      if(!this.send_again_countdown) return 0;
+      if (!this.send_again_countdown) return 0;
       return secondsToHMS(this.send_again_countdown).mm_ss;
     }
   },
@@ -39,7 +39,9 @@ export default {
     }
 
     this.user_email = this.user?.email || "";
-    this.startSendAgainCountdownInterval();
+    if (this.emailVerificationTokenIsSent) {
+      this.startSendAgainCountdownInterval();
+    }
   },
 
   beforeUnmount() {
@@ -47,7 +49,10 @@ export default {
   },
 
   methods: {
-    ...mapMutations({updateUserProperty: "auth/UPDATE_USER_PROPERTY"}),
+    ...mapMutations({
+      updateUserProperty: "auth/UPDATE_USER_PROPERTY",
+      setEmailVerificationTokenIsSent: "helpers/SET_EMAIL_VERIFICATION_IS_SENT"
+    }),
 
     async onSubmit() {
       const token = this.token.trim();

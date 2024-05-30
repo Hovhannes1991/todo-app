@@ -152,7 +152,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations({updateUser: "auth/UPDATE_USER"}),
+    ...mapMutations({updateUser: "auth/UPDATE_USER", setEmailVerificationTokenIsSent: "helpers/SET_EMAIL_VERIFICATION_IS_SENT"}),
 
     setInitialSection() {
       const section = setGetAuthPageSection() || "login";
@@ -219,6 +219,7 @@ export default {
       try {
         this.loading = true;
         const {data} = await register(this.user);
+        this.setEmailVerificationTokenIsSent(true);
         setGetPageFlushMessage("Congratulation, registration completed successfully!!!");
         this.onAuthSuccess(data);
       } catch (err) {
