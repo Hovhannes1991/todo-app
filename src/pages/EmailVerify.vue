@@ -82,9 +82,15 @@ export default {
       try {
         await resendToken(this.user_email);
         this.startSendAgainCountdownInterval();
+        this.errors.token = null;
       } catch (err) {
-        console.log(err);
         this.send_again_disabled = false;
+        const token_error = err.response?.data?.token;
+        if(token_error) {
+          this.errors.token = token_error;
+        } else {
+          toast.error("Something went wrong");
+        }
       }
     },
 
