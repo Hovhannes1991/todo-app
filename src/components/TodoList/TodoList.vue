@@ -1,6 +1,6 @@
 <script>
 import {mapGetters, mapMutations} from "vuex";
-import {toast} from "vue3-toastify";
+import {toastSuccess, toastError} from "@/services/toast.service.js";
 import {getUserTodos, addTodo, editTodo, deleteTodo} from "@/services/todos.service.js";
 import TodoListSearchAndFilter from "@/components/TodoList/TodoListSearchAndFilter.vue";
 import TodoListItem from "@/components/TodoList/TodoListItem.vue";
@@ -67,10 +67,10 @@ export default {
       try {
         this.add_todo_loading = true;
         const {data} = await addTodo(todo);
-        toast.success("Todo added successfully");
+        toastSuccess("Todo added successfully");
         this.addTodo({todo: data.new_todo});
       } catch (err) {
-        toast.error("Something went wrong");
+        toastError("Something went wrong");
       }
       this.add_todo_loading = false;
     },
@@ -80,7 +80,7 @@ export default {
         this.updateTodo({id, updated_props: {disabled: true}});
         const {data} = await deleteTodo(id);
         this.deleteTodo({id});
-        toast.success(data.message);
+        toastSuccess(data.message);
       } catch (err) {
         console.log(err)
       }
@@ -96,7 +96,7 @@ export default {
         const {data} = await editTodo(todo);
         this.updateTodo({id: todo._id, updated_props: todo});
         this.$refs.edit_todo_modal.closeModal();
-        toast.success(data.message);
+        toastSuccess(data.message);
       } catch (err) {
         console.log(err);
       }

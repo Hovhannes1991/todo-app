@@ -1,5 +1,4 @@
 <script>
-import {toast} from 'vue3-toastify';
 import TodoList from "@/components/TodoList/TodoList.vue";
 
 export default {

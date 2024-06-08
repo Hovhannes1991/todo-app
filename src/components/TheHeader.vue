@@ -1,6 +1,6 @@
 <script>
 import {mapActions} from "vuex";
-import {toast} from 'vue3-toastify';
+import {toastWarn} from "@/services/toast.service.js";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 export default {
@@ -39,11 +39,11 @@ export default {
     },
 
     gotoProfilePage() {
-      toast.warn("This section is not ready yet!!!");
+      toastWarn("This section is not ready yet!!!");
     },
 
     gotoSettingsPage() {
-      toast.warn("This section is not ready yet!!!");
+      toastWarn("This section is not ready yet!!!");
     },
 
     async logoutHandler() {

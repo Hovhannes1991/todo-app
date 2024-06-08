@@ -3,7 +3,7 @@ import {authMiddleware} from "@/middlewares/auth.middleware.js";
 import {emailVerificationMiddleware} from "@/middlewares/email-verification.middleware.js";
 import {guestMiddleware} from "@/middlewares/guest.middleware.js";
 import {setGetPageFlushMessage} from "@/helpers/storage.js";
-import {toast} from "vue3-toastify";
+import {toastService} from "@/services/toast.service.js";
 
 const global_middlewares = [checkAuthMiddleware];
 
@@ -44,6 +44,6 @@ function runMiddlewares(middlewares, to, from, next) {
 export const afterEach = () => {
     const {message, type} = setGetPageFlushMessage();
     if (message && type) {
-        toast[type](message);
+        toastService[type](message);
     }
 }

@@ -3,7 +3,7 @@ import {mapGetters, mapMutations} from "vuex";
 import {emailVerify, resendToken} from "@/services/verification.service.js"
 import BaseButton from "@/ui/BaseButton.vue";
 import BaseInput from "@/ui/BaseInput.vue";
-import {toast} from "vue3-toastify";
+import {toastError} from "@/services/toast.service.js";
 import {secondsToHMS} from "@/helpers/seconds-to-hms.js";
 
 export default {
@@ -71,7 +71,7 @@ export default {
         if (token_error) {
           this.errors.token = token_error;
         } else {
-          toast.error("Something went wrong");
+          toastError("Something went wrong");
         }
       }
       this.loading = false;
@@ -89,7 +89,7 @@ export default {
         if(token_error) {
           this.errors.token = token_error;
         } else {
-          toast.error("Something went wrong");
+          toastError("Something went wrong");
         }
       }
     },
