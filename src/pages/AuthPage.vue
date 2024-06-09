@@ -34,7 +34,7 @@ import {required, email, minLength, sameAs, helpers} from "@vuelidate/validators
 import BaseButton from "@/ui/BaseButton.vue";
 import BaseInput from "@/ui/BaseInput.vue";
 import SectionSwitcher from "@/components/SectionSwitcher.vue";
-import {register, login} from "@/services/auth.service.js";
+import {register, login} from "@/services/http/auth.service.js";
 import {saveTokens, setGetAuthPageSection, setGetPageFlushMessage} from "@/helpers/storage.js";
 
 export default {

@@ -13,19 +13,26 @@ export default {
       show_mobile_menu: false,
       user_menu_items: [
         {
-          label: 'Profile',
+          label: 'Home',
+          to: "home",
           icon: 'pi pi-home',
-          handler: "gotoProfilePage"
+        },
+        {
+          label: 'Profile',
+          to: "profile",
+          icon: 'pi pi-home'
         },
         {
           label: 'Settings',
-          icon: 'pi pi-star',
-          handler: "gotoSettingsPage"
+          to: "settings",
+          icon: 'pi pi-star'
         },
         {
           label: 'Logout',
+          to: null,
           icon: 'pi pi-search',
-          handler: "logoutHandler"
+          handler: "logoutHandler",
+          is_button: true
         }
       ]
     }
@@ -38,8 +45,12 @@ export default {
       this.show_mobile_menu = !this.show_mobile_menu;
     },
 
+    gotoHomePage() {
+      this.$router.push({name: "home"});
+    },
+
     gotoProfilePage() {
-      toastWarn("This section is not ready yet!!!");
+      this.$router.push({name: "profile"});
     },
 
     gotoSettingsPage() {
@@ -73,7 +84,8 @@ export default {
       <div class="dropdown">
         <ul>
           <li v-for="item in user_menu_items">
-            <button @click="menuItemClickHandler(item.handler)" type="button">{{ item.label }}</button>
+            <button v-if="item.is_button" @click="menuItemClickHandler(item.handler)" type="button">{{ item.label }}</button>
+            <RouterLink v-else :to="item.to">{{ item.label }}</RouterLink>
           </li>
         </ul>
       </div>
@@ -83,8 +95,9 @@ export default {
       <FontAwesomeIcon icon="bars"/>
     </div>
     <ul :class="{'user-menu__mobile': true, 'opened': show_mobile_menu}">
-      <li v-for="item in user_menu_items">
-        <button @click="menuItemClickHandler(item.handler)" type="button">{{ item.label }}</button>
+      <li @click="toggleMenu" v-for="item in user_menu_items">
+        <button v-if="item.is_button" @click="menuItemClickHandler(item.handler)" type="button">{{ item.label }}</button>
+        <RouterLink v-else :to="item.to">{{ item.label }}</RouterLink>
       </li>
     </ul>
   </header>

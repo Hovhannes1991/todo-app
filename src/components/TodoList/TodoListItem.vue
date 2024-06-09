@@ -1,7 +1,7 @@
 <script>
 import {mapMutations} from "vuex";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import {toggleTodo} from "@/services/todos.service.js";
+import {toggleTodo} from "@/services/http/todos.service.js";
 
 export default {
   name: "TodoListItem",

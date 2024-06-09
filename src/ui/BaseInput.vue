@@ -137,7 +137,6 @@ export default {
 
 <style scoped lang="scss">
 $selected: #10b981;
-$error: #ef4444;
 
 .base-input-label {
   display: flex;
@@ -158,7 +157,7 @@ $error: #ef4444;
   }
 
   .error-message {
-    color: $error;
+    color: var(--error-message);
     font-size: 1.4rem;
   }
 }
@@ -186,8 +185,8 @@ $error: #ef4444;
   }
 
   &.has-error {
-    color: $error;
-    border-color: $error;
+    color: var(--error-message);
+    border-color: var(--error-message);
   }
 
   &:disabled {
@@ -201,8 +200,8 @@ $error: #ef4444;
     }
   }
 
-  &::placeholder {
-    color: rgba(0, 0, 0, 0.5);
-  }
+  //&::placeholder {
+  //  color: rgba(0, 0, 0, 0.5);
+  //}
 }
 </style>
