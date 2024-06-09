@@ -155,6 +155,7 @@ export default {
       position: absolute;
       padding-top: 1rem;
       right: 0;
+      z-index: 10;
 
       ul {
         background-color: #f9f9f9;
