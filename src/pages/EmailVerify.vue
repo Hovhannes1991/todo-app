@@ -140,7 +140,7 @@ export default {
           tab-index="0"/>
 
       <div class="buttons">
-        <BaseButton label="Verify" type="submit" :loading="loading"/>
+        <BaseButton label="Verify" variant="app-button" type="submit" :loading="loading"/>
 
         <div class="send-again-btn">
           <BaseButton @click="sendAgain"

@@ -17,7 +17,7 @@ export default {
     },
     variant: {
       validator(value) {
-        const button_variants = ["primary", "secondary", "success", "warning", "danger", "link"];
+        const button_variants = ["app-button", "primary", "secondary", "success", "warning", "danger", "link"];
         return button_variants.includes(value);
       },
       default: "primary"
@@ -74,6 +74,18 @@ $text-color: #FFF;
   &:hover {
     background-color: darken($primary, 10%);
     border-color: darken($primary, 10%);
+  }
+
+  &.app-button {
+    background-color: var(--main-bg-color);
+    border: 2px solid var(--main-bg-color);
+    color: var(--main-fg-color);
+
+    &:hover,
+    &:focus-visible {
+      background-color: var(--main-bg-color-darken);
+      border-color: var(--main-bg-color-darken);
+    }
   }
 
   &.primary {

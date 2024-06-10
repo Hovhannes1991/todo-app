@@ -42,7 +42,7 @@ export default {
   justify-content: center;
   height: 9rem;
   overflow: hidden;
-  background-color: #009888;
+  background-color: var(--main-bg-color);
 
   @media only screen and (max-width: 370px) {
     height: 7rem;

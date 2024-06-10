@@ -23,7 +23,7 @@ export default {
 <template>
   <div class="section-switcher">
     <BaseButton v-for="section in sections"
-                :variant="selected_section === section ? 'primary' : 'secondary'"
+                :variant="selected_section === section ? 'app-button' : 'secondary'"
                 @click="selectSection(section)"
                 :label="section"
                 :key="section"/>

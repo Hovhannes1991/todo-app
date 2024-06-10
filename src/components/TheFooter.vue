@@ -64,7 +64,7 @@ footer,
 
   .footer-row {
     width: 100%;
-    color: white;
+    color: var(--main-fg-color);
     display: flex;
     align-items: center;
     font-size: 3rem;
@@ -72,7 +72,7 @@ footer,
   }
 
   .footer-row-1 {
-    background-color: #009888;
+    background-color: var(--main-bg-color);
     justify-content: space-between;
     padding: 1.5rem 4rem 1.5rem 1.5rem;
     gap: 1rem 3rem;
@@ -89,7 +89,7 @@ footer,
 
       a {
         text-decoration: none;
-        color: white;
+        color: var(--main-fg-color);
         transition: color 0.2s ease-in-out;
 
         &:hover {
@@ -105,7 +105,7 @@ footer,
   }
 
   .footer-row-2 {
-    background-color: black;
+    background-color: var(--main-fg-color);
     padding: 1.5rem;
     justify-content: center;
     font-size: 1.8rem;

@@ -180,8 +180,8 @@ $selected: #10b981;
   }
 
   &:hover, &:focus {
-    color: $selected;
-    border-color: $selected;
+    color: #000;
+    border-color: #000;
   }
 
   &.has-error {
@@ -199,9 +199,5 @@ $selected: #10b981;
       color: black;
     }
   }
-
-  //&::placeholder {
-  //  color: rgba(0, 0, 0, 0.5);
-  //}
 }
 </style>

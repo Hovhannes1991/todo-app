@@ -235,7 +235,7 @@ export default {
                        placeholder="Postal code"/>
 
 
-            <BaseButton label="Submit" type="submit" :loading="loading" :disabled="!hasChanges"/>
+            <BaseButton label="Submit" type="submit" variant="app-button" :loading="loading" :disabled="!hasChanges"/>
           </form>
         </div>
 
@@ -244,7 +244,7 @@ export default {
             <BaseInput v-model="user.email" disabled/>
             <BaseInput v-model="user_data.email" :error="errorMessages.email"/>
 
-            <BaseButton label="Change E-mail" type="submit" :loading="loading"/>
+            <BaseButton label="Change E-mail" type="submit" variant="app-button" :loading="loading"/>
           </form>
         </div>
       </template>
@@ -291,8 +291,8 @@ export default {
       text-align: center;
 
       &.active-tab {
-        background: #009888;
-        color: white;
+        background: var(--main-bg-color);
+        color: var( --main-fg-color);
         cursor: default;
       }
     }

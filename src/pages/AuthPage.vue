@@ -22,7 +22,7 @@
               :key="input.name"/>
         </div>
 
-        <BaseButton :label="submitButtonLabel" type="submit" :loading="loading"/>
+        <BaseButton :label="submitButtonLabel" variant="app-button" type="submit" :loading="loading"/>
       </form>
     </div>
   </div>
@@ -236,8 +236,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$primary: #1ab188;
-
 .login-register-page {
   .form-container {
     display: flex;
@@ -249,7 +247,7 @@ $primary: #1ab188;
     padding: 5rem;
     background-color: #13232f;
     border-radius: 1.5rem;
-    box-shadow: 0 0 20px 5px $primary;
+    box-shadow: 0 0 20px 4px var(--main-bg-color);
 
     @media screen and (max-width: 756px) {
       padding: 3.5rem 2rem;
