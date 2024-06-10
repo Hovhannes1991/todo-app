@@ -1,6 +1,7 @@
 <script>
 import {shallowRef} from 'vue';
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
+import GuestLayout from "@/layouts/GuestLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 
 export default {
@@ -10,6 +11,7 @@ export default {
     return {
       layouts: {
         default: shallowRef(DefaultLayout),
+        guest: shallowRef(GuestLayout),
         empty: shallowRef(EmptyLayout),
       },
     }

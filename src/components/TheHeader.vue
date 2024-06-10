@@ -6,6 +6,13 @@ export default {
   name: "TheHeader",
   components: {FontAwesomeIcon},
 
+  props: {
+    isGuest: {
+      type: Boolean,
+      default: false
+    }
+  },
+
 
   data() {
     return {
@@ -68,33 +75,35 @@ export default {
         <div class="title">Todo App</div>
       </RouterLink>
     </div>
-    <div class="user-menu">
-      <button class="user-menu__btn">User Menu &#9662;</button>
-      <div class="dropdown">
-        <ul>
-          <li v-for="item in user_menu_items">
-            <button v-if="item.is_button" @click="menuItemClickHandler(item.handler)" type="button">{{
-                item.label
-              }}
-            </button>
-            <RouterLink v-else :to="item.to">{{ item.label }}</RouterLink>
-          </li>
-        </ul>
+    <template v-if="!isGuest">
+      <div class="user-menu">
+        <button class="user-menu__btn">User Menu &#9662;</button>
+        <div class="dropdown">
+          <ul>
+            <li v-for="item in user_menu_items">
+              <button v-if="item.is_button" @click="menuItemClickHandler(item.handler)" type="button">{{
+                  item.label
+                }}
+              </button>
+              <RouterLink v-else :to="item.to">{{ item.label }}</RouterLink>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-    <div class="burger-menu"
-         @click="toggleMenu">
-      <FontAwesomeIcon icon="bars"/>
-    </div>
-    <ul :class="{'user-menu__mobile': true, 'opened': show_mobile_menu}">
-      <li @click="toggleMenu" v-for="item in user_menu_items">
-        <button v-if="item.is_button" @click="menuItemClickHandler(item.handler)" type="button">{{
-            item.label
-          }}
-        </button>
-        <RouterLink v-else :to="item.to">{{ item.label }}</RouterLink>
-      </li>
-    </ul>
+      <div class="burger-menu"
+           @click="toggleMenu">
+        <FontAwesomeIcon icon="bars"/>
+      </div>
+      <ul :class="{'user-menu__mobile': true, 'opened': show_mobile_menu}">
+        <li @click="toggleMenu" v-for="item in user_menu_items">
+          <button v-if="item.is_button" @click="menuItemClickHandler(item.handler)" type="button">{{
+              item.label
+            }}
+          </button>
+          <RouterLink v-else :to="item.to">{{ item.label }}</RouterLink>
+        </li>
+      </ul>
+    </template>
   </header>
 </template>
 
