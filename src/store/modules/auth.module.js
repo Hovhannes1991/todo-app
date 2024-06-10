@@ -1,7 +1,6 @@
 import * as types from '../mutation-types';
 import {getTokens, clearTokens, saveUserData, clearUserData, setGetPageFlushMessage} from "@/helpers/storage.js";
 import {getUserByToken, logout} from "@/api/auth.service.js";
-import {UPDATE_USER_PROPERTY} from "../mutation-types";
 
 export const user_store = {
     namespaced: true,

@@ -102,7 +102,7 @@ export default {
       const password_icon = this.show_password ? "eye" : "eye-slash";
       const password_type = this.show_password ? "text" : "password";
 
-      const items = [
+      return [
         {
           placeholder: "First name",
           name: "firstname",
@@ -135,8 +135,6 @@ export default {
           tab_index: !this.isLoginSection ? "0" : "-1"
         }
       ]
-
-      return items;
     },
 
     submitButtonLabel() {

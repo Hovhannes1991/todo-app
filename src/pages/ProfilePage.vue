@@ -140,8 +140,7 @@ export default {
 
   created() {
     for (let key in this.user) {
-      const value = typeof this.user[key] === "object" ? {...this.user[key]} : this.user[key];
-      this.user_data[key] = value;
+      this.user_data[key] = typeof this.user[key] === "object" ? {...this.user[key]} : this.user[key];
     }
 
     if (!this.countries?.length) {
