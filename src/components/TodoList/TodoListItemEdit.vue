@@ -25,6 +25,12 @@ export default {
     }
   },
 
+  computed: {
+    hasChanges() {
+      return this.original_title !== this.todo.title;
+    }
+  },
+
   methods: {
     async openModal(todo) {
       this.todo = {...todo};
@@ -39,6 +45,8 @@ export default {
     },
 
     saveTodo() {
+      if(!this.hasChanges) return;
+
       if (!this.todo.title?.trim()) {
         this.errors.title = "Field is required";
         return;
@@ -63,7 +71,7 @@ export default {
         :disabled="updating"
         :error="errors.title"/>
     <div class="dialog-buttons">
-      <BaseButton label="Save" @click="saveTodo" :loading="updating"/>
+      <BaseButton label="Save" @click="saveTodo" :loading="updating" :disabled="!hasChanges"/>
       <BaseButton label="Cancel" @click="cancel" :disabled="updating" variant="secondary"/>
     </div>
   </div>

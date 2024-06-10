@@ -61,8 +61,8 @@ export default {
     },
 
     hasChanges() {
-      if (this.active_tab === "change_email") {
-        const props = ["firstname", "lastname", "country", "city", "address"];
+      if (this.active_tab === "personal_information") {
+        const props = ["firstname", "lastname", "country", "city", "address", "postal_code"];
         return props.some(prop => this.user[prop] !== this.user_data[prop]);
       }
       return true; //todo
@@ -200,7 +200,7 @@ export default {
 
       <template v-if="user">
         <div v-show="active_tab === 'personal_information'" class="content">
-          <form @submit.prevent="onSubmitPersonalData">
+          <form @submit.prevent="onSubmitPersonalData" autocomplete="on">
             <BaseInput v-model="user_data.firstname"
                        :error="errorMessages.firstname"
                        @input="removeBackendError('firstname')"
@@ -235,12 +235,12 @@ export default {
                        placeholder="Postal code"/>
 
 
-            <BaseButton label="Submit" type="submit" :loading="loading"/>
+            <BaseButton label="Submit" type="submit" :loading="loading" :disabled="!hasChanges"/>
           </form>
         </div>
 
         <div v-show="active_tab === 'change_email'" class="content">
-          <form @submit.prevent="onChangeEmail">
+          <form @submit.prevent="onChangeEmail" autocomplete="on">
             <BaseInput v-model="user.email" disabled/>
             <BaseInput v-model="user_data.email" :error="errorMessages.email"/>
 
