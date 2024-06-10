@@ -1,6 +1,5 @@
 <script>
 import {mapActions} from "vuex";
-import {toastWarn} from "@/services/toast.service.js";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 export default {
@@ -45,18 +44,6 @@ export default {
       this.show_mobile_menu = !this.show_mobile_menu;
     },
 
-    gotoHomePage() {
-      this.$router.push({name: "home"});
-    },
-
-    gotoProfilePage() {
-      this.$router.push({name: "profile"});
-    },
-
-    gotoSettingsPage() {
-      toastWarn("This section is not ready yet!!!");
-    },
-
     async logoutHandler() {
       try {
         await this.logout();
@@ -76,15 +63,20 @@ export default {
 <template>
   <header class="the-header">
     <div class="logo">
-      <img src="@/assets/logo.png" alt="Logo">
-      <div class="title">Todo App</div>
+      <RouterLink to="home">
+        <img src="@/assets/logo.png" alt="Logo">
+        <div class="title">Todo App</div>
+      </RouterLink>
     </div>
     <div class="user-menu">
       <button class="user-menu__btn">User Menu &#9662;</button>
       <div class="dropdown">
         <ul>
           <li v-for="item in user_menu_items">
-            <button v-if="item.is_button" @click="menuItemClickHandler(item.handler)" type="button">{{ item.label }}</button>
+            <button v-if="item.is_button" @click="menuItemClickHandler(item.handler)" type="button">{{
+                item.label
+              }}
+            </button>
             <RouterLink v-else :to="item.to">{{ item.label }}</RouterLink>
           </li>
         </ul>
@@ -96,7 +88,10 @@ export default {
     </div>
     <ul :class="{'user-menu__mobile': true, 'opened': show_mobile_menu}">
       <li @click="toggleMenu" v-for="item in user_menu_items">
-        <button v-if="item.is_button" @click="menuItemClickHandler(item.handler)" type="button">{{ item.label }}</button>
+        <button v-if="item.is_button" @click="menuItemClickHandler(item.handler)" type="button">{{
+            item.label
+          }}
+        </button>
         <RouterLink v-else :to="item.to">{{ item.label }}</RouterLink>
       </li>
     </ul>
@@ -128,6 +123,13 @@ export default {
   .logo {
     display: flex;
     align-items: center;
+
+    a {
+      display: flex;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+    }
 
     img {
       height: 50px;

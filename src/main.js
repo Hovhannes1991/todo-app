@@ -4,7 +4,7 @@ import 'vue3-toastify/dist/index.css';
 import App from './App.vue'
 import router from "@/router/index.js";
 import {store} from "@/store/index.js";
-import "./plugins/axios.js";
+
 import "./plugins/font-awsome-icons.js";
 
 import PrimeVue from 'primevue/config';

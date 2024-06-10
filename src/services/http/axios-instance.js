@@ -1,6 +1,6 @@
-import Swal from 'sweetalert2';
-import router from '@/router/index.js';
 import axios from 'axios';
+import router from '@/router/index.js';
+import Swal from 'sweetalert2';
 import {clearTokens, getTokens, saveTokens} from "@/helpers/storage.js";
 
 const MODE = import.meta.env.MODE
@@ -8,7 +8,10 @@ const MODE = import.meta.env.MODE
 const BASE_URL_PROD = 'https://todo-app-manager-backend.vercel.app/';
 const BASE_URL_DEV = 'http://localhost:4000/';
 const BASE_URL = MODE === "development" ? BASE_URL_DEV : BASE_URL_PROD;
-axios.defaults.baseURL = BASE_URL;
+
+const axiosInstance = axios.create({
+    baseURL: BASE_URL
+});
 
 const REFRESH_TOKEN_URL = "auth/refresh-token";
 
@@ -32,8 +35,9 @@ const processQueue = (error, token = null) => {
     failedQueue = [];
 };
 
+
 // Request interceptor
-axios.interceptors.request.use(request => {
+axiosInstance.interceptors.request.use(request => {
     const {access_token} = getTokens();
 
     if (access_token) {
@@ -47,7 +51,7 @@ axios.interceptors.request.use(request => {
 
 
 // Response interceptor
-axios.interceptors.response.use(response => response, err => {
+axiosInstance.interceptors.response.use(response => response, err => {
     const originalRequest = err.config;
 
     const ERROR_STATUS = err?.response?.status || 500;
@@ -59,7 +63,7 @@ axios.interceptors.response.use(response => response, err => {
             })
                 .then(token => {
                     originalRequest.headers['Authorization'] = 'Bearer ' + token;
-                    return axios(originalRequest);
+                    return axiosInstance(originalRequest);
                 })
                 .catch(err => {
                     return Promise.reject(err);
@@ -71,14 +75,14 @@ axios.interceptors.response.use(response => response, err => {
 
         return new Promise(function (resolve, reject) {
             const {refresh_token} = getTokens();
-            axios.post(REFRESH_TOKEN_URL, {refresh_token})
+            axiosInstance.post(REFRESH_TOKEN_URL, {refresh_token})
                 .then(({data}) => {
                     const access_token = data.access_token;
-                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
+                    axiosInstance.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
                     originalRequest.headers['Authorization'] = 'Bearer ' + access_token;
                     saveTokens({access_token})
                     processQueue(null, data);
-                    resolve(axios(originalRequest));
+                    resolve(axiosInstance(originalRequest));
                 })
                 .catch(error => {
                     processQueue(error, null);
@@ -113,3 +117,5 @@ axios.interceptors.response.use(response => response, err => {
 
     return Promise.reject(err);
 })
+
+export default axiosInstance;

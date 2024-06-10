@@ -6,7 +6,7 @@
           :selected_section="selected_section"
           @select-section="changeSection"/>
 
-      <form @submit.prevent="onSubmit">
+      <form @submit.prevent="onSubmit" autocomplete="on">
         <div v-for="input in formInputs"
              :class="{'form-item': true, 'form-item-hidden': !input.login_item && isLoginSection}">
           <BaseInput
@@ -14,6 +14,7 @@
               @input="removeBackendError(input.name)"
               @on-icon-click="handleIconClick(input.onIconClick)"
               :placeholder="input.placeholder"
+              :name="input.name"
               :type="input.type"
               :icon="input.icon"
               :error="errorMessages[input.name]"
@@ -34,7 +35,7 @@ import {required, email, minLength, sameAs, helpers} from "@vuelidate/validators
 import BaseButton from "@/ui/BaseButton.vue";
 import BaseInput from "@/ui/BaseInput.vue";
 import SectionSwitcher from "@/components/SectionSwitcher.vue";
-import {register, login} from "@/services/http/auth.service.js";
+import {register, login} from "@/api/auth.service.js";
 import {saveTokens, setGetAuthPageSection, setGetPageFlushMessage} from "@/helpers/storage.js";
 
 export default {
@@ -152,7 +153,10 @@ export default {
   },
 
   methods: {
-    ...mapMutations({updateUser: "auth/UPDATE_USER", setEmailVerificationTokenIsSent: "helpers/SET_EMAIL_VERIFICATION_IS_SENT"}),
+    ...mapMutations({
+      updateUser: "auth/UPDATE_USER",
+      setEmailVerificationTokenIsSent: "helpers/SET_EMAIL_VERIFICATION_IS_SENT"
+    }),
 
     setInitialSection() {
       const section = setGetAuthPageSection() || "login";

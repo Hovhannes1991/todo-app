@@ -1,5 +1,5 @@
 import * as types from '../mutation-types';
-import {getAllCountries} from "@/services/http/countries.service.js";
+import {getAllCountries} from "@/api/countries.service.js";
 
 export const countries_store = {
     namespaced: true,

@@ -1,6 +1,6 @@
 <script>
 import {mapGetters, mapMutations} from "vuex";
-import {emailVerify, resendToken} from "@/services/http/verification.service.js"
+import {emailVerify, resendToken} from "@/api/verification.service.js"
 import BaseButton from "@/ui/BaseButton.vue";
 import BaseInput from "@/ui/BaseInput.vue";
 import {toastError} from "@/services/toast.service.js";

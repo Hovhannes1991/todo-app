@@ -5,7 +5,7 @@ import useVuelidate from "@vuelidate/core";
 import {required, email, sameAs} from "@vuelidate/validators";
 import BaseInput from "@/ui/BaseInput.vue";
 import BaseButton from "@/ui/BaseButton.vue";
-import {updateProfile} from "@/services/http/profile.service.js";
+import {updateProfile} from "@/api/profile.service.js";
 import {toastError, toastSuccess} from "@/services/toast.service.js";
 import BaseSelect from "@/ui/BaseSelect.vue";
 

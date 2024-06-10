@@ -1,7 +1,7 @@
 <script>
 import {mapGetters, mapMutations} from "vuex";
 import {toastSuccess, toastError} from "@/services/toast.service.js";
-import {getUserTodos, addTodo, editTodo, deleteTodo} from "@/services/http/todos.service.js";
+import {getUserTodos, addTodo, editTodo, deleteTodo} from "@/api/todos.service.js";
 import TodoListSearchAndFilter from "@/components/TodoList/TodoListSearchAndFilter.vue";
 import TodoListItem from "@/components/TodoList/TodoListItem.vue";
 import TodoListNewItem from "@/components/TodoList/TodoListNewItem.vue";
