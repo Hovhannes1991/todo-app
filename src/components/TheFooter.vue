@@ -42,7 +42,7 @@ export default {
       <p>Contacts</p>
       <ul class="social">
         <li v-for="item in social" :key="item.name">
-          <a :href="item.href" target="_blank">
+          <a :href="item.href" target="_blank" :aria-label="`${item.name} link`">
             <FontAwesomeIcon :icon="['fab', item.icon]"/>
           </a>
         </li>
@@ -105,7 +105,8 @@ footer,
   }
 
   .footer-row-2 {
-    background-color: var(--main-fg-color);
+    background-color: var(--app-black);
+    color: var(--app-white);
     padding: 1.5rem;
     justify-content: center;
     font-size: 1.8rem;

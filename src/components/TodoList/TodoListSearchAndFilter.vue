@@ -12,7 +12,7 @@ export default {
       search: "",
 
       search_icon_styles: {
-        color: 'white'
+        color: 'var(--app-black)'
       }
     }
   },
@@ -31,6 +31,7 @@ export default {
                v-model="search"
                placeholder="Search"
                variant="underlined"
+               main_color="black"
                :icon-styles="search_icon_styles"/>
   </div>
 </template>

@@ -141,13 +141,14 @@ export default {
     }
 
     img {
+      width: 50px;
       height: 50px;
-      margin-right: 10px;
+      margin-right: 1rem;
     }
   }
 
   .title {
-    font-size: 24px;
+    font-size: 2.4rem;
   }
 
   .user-menu {

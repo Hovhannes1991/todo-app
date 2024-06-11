@@ -166,7 +166,7 @@ export default {
       height: 50rem;
       overflow-y: auto;
       scrollbar-width: thin;
-      scrollbar-color: #0AB6AB #28313b;
+      scrollbar-color: var(--main-bg-color) var(--main-fg-color);
       padding: 0.8rem 2rem;
 
       @media only screen and (max-width: 300px) {
