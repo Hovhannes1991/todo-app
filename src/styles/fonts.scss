@@ -7,6 +7,7 @@ $roboto-folder-path: "./fonts/roboto";
   font-weight: 100;
   src: local('Roboto Thin'), local('Roboto-Thin'),
   url('#{$roboto-folder-path}/Roboto-Thin.ttf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
@@ -15,6 +16,7 @@ $roboto-folder-path: "./fonts/roboto";
   font-weight: 100;
   src: local('Roboto Thin Italic'), local('Roboto-ThinItalic'),
   url('#{$roboto-folder-path}/Roboto-ThinItalic.ttf') format('truetype');
+  font-display: swap;
 }
 
 /* Light 300 */
@@ -24,6 +26,7 @@ $roboto-folder-path: "./fonts/roboto";
   font-weight: 300;
   src: local('Roboto Light'), local('Roboto-Light'),
   url('#{$roboto-folder-path}/Roboto-Light.ttf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
@@ -32,6 +35,7 @@ $roboto-folder-path: "./fonts/roboto";
   font-weight: 300;
   src: local('Roboto Light Italic'), local('Roboto-LightItalic'),
   url('/#{$roboto-folder-path}/Roboto-LightItalic.ttf') format('truetype');
+  font-display: swap;
 }
 
 /* Regular 400 */
@@ -41,6 +45,7 @@ $roboto-folder-path: "./fonts/roboto";
   font-weight: 400;
   src: local('Roboto'), local('Roboto-Regular'),
   url('/#{$roboto-folder-path}/Roboto-Regular.ttf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
@@ -49,6 +54,7 @@ $roboto-folder-path: "./fonts/roboto";
   font-weight: 400;
   src: local('Roboto Italic'), local('Roboto-Italic'),
   url('/#{$roboto-folder-path}/Roboto-Italic.ttf') format('truetype');
+  font-display: swap;
 }
 
 /* Medium 500 */
@@ -58,6 +64,7 @@ $roboto-folder-path: "./fonts/roboto";
   font-weight: 500;
   src: local('Roboto Medium'), local('Roboto-Medium'),
   url('/#{$roboto-folder-path}/Roboto-Medium.ttf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
@@ -66,6 +73,7 @@ $roboto-folder-path: "./fonts/roboto";
   font-weight: 500;
   src: local('Roboto Medium Italic'), local('Roboto-MediumItalic'),
   url('/#{$roboto-folder-path}/Roboto-MediumItalic.ttf') format('truetype');
+  font-display: swap;
 }
 
 /* Bold 700 */
@@ -75,6 +83,7 @@ $roboto-folder-path: "./fonts/roboto";
   font-weight: 700;
   src: local('Roboto Bold'), local('Roboto-Bold'),
   url('/#{$roboto-folder-path}/Roboto-Bold.ttf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
@@ -83,6 +92,7 @@ $roboto-folder-path: "./fonts/roboto";
   font-weight: 700;
   src: local('Roboto Bold Italic'), local('Roboto-BoldItalic'),
   url('/#{$roboto-folder-path}/Roboto-BoldItalic.ttf') format('truetype');
+  font-display: swap;
 }
 
 /* Black 900 */
@@ -92,6 +102,7 @@ $roboto-folder-path: "./fonts/roboto";
   font-weight: 900;
   src: local('Roboto Black'), local('Roboto-Black'),
   url('/#{$roboto-folder-path}/Roboto-Black.ttf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
@@ -100,9 +111,5 @@ $roboto-folder-path: "./fonts/roboto";
   font-weight: 900;
   src: local('Roboto Black Italic'), local('Roboto-BlackItalic'),
   url('/#{$roboto-folder-path}/Roboto-BlackItalic.ttf') format('truetype');
-}
-
-/* Apply the font family to your elements */
-body {
-  font-family: 'Roboto', sans-serif;
+  font-display: swap;
 }
