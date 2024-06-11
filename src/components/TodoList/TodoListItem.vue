@@ -2,10 +2,11 @@
 import {mapMutations} from "vuex";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {toggleTodo} from "@/api/todos.service.js";
+import CheckboxSvgIcon from "@/ui/CheckboxSvgIcon.vue";
 
 export default {
   name: "TodoListItem",
-  components: {FontAwesomeIcon},
+  components: {CheckboxSvgIcon, FontAwesomeIcon},
 
   props: {
     todo: Object
@@ -43,8 +44,7 @@ export default {
 
     <label :for="todo._id">
       <span class="checkbox-icon">
-        <img v-show="todo.completed" src="@/assets/icons/checked.svg" alt="">
-        <img v-show="!todo.completed" src="@/assets/icons/unchecked.svg" alt="">
+        <CheckboxSvgIcon :checked="todo.completed"/>
       </span>
       <input
           :id="todo._id"
@@ -107,7 +107,8 @@ export default {
       width: 3rem;
       height: 3rem;
 
-      img {
+      img,
+      svg {
         width: 3rem;
         height: 3rem;
       }
