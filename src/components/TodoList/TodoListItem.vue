@@ -54,7 +54,7 @@ export default {
           :class="{ 'todo-item__checkbox-checked': todo.completed }"
           tabindex="-1"/>
 
-      <div class="todo-title text-ellipsis">{{ todo.title }}</div>
+      <span class="todo-title">{{ todo.title }}</span>
     </label>
 
     <div class="todo-list-item__buttons">
@@ -121,6 +121,7 @@ export default {
 
   .todo-title {
     position: relative;
+    display: block;
     margin-left: 2rem;
     width: 100%;
 
