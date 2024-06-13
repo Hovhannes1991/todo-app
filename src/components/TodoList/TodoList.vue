@@ -9,11 +9,12 @@ import SkeletonListLoader from "@/ui/SkeletonListLoader.vue";
 import TodoListEmptyResults from "@/components/TodoList/TodoListEmptyResults.vue";
 import BaseInput from "@/ui/BaseInput.vue";
 import TodoListItemEdit from "@/components/TodoList/TodoListItemEdit.vue";
+import DeleteModal from "@/ui/DeleteModal.vue";
 
 export default {
   name: "TodoList",
   components: {
-    TodoListItemEdit,
+    TodoListItemEdit, DeleteModal,
     BaseInput, TodoListEmptyResults, SkeletonListLoader, TodoListSearchAndFilter, TodoListNewItem, TodoListItem
   },
 
@@ -27,6 +28,8 @@ export default {
       loading: false,
       add_todo_loading: false,
       updating_todo: false,
+
+      deleting_id: null
     }
   },
 
@@ -75,7 +78,8 @@ export default {
       this.add_todo_loading = false;
     },
 
-    async onDeleteTodo(id) {
+    async onConfirmDeleteTodo() {
+      const id = this.deleting_id;
       try {
         this.updateTodo({id, updated_props: {disabled: true}});
         const {data} = await deleteTodo(id);
@@ -84,6 +88,16 @@ export default {
       } catch (err) {
         console.log(err)
       }
+      this.deleting_id = null;
+    },
+
+    onCancelDelete() {
+      this.deleting_id = null;
+    },
+
+    openDeleteModal(id) {
+      this.deleting_id = id;
+      this.$refs.delete_modal.showModal();
     },
 
     onStartEditTodo(todo) {
@@ -127,7 +141,7 @@ export default {
 
           <TodoListItem v-for="todo in todosToShow"
                         :todo="todo"
-                        @delete-todo="onDeleteTodo"
+                        @delete-todo="openDeleteModal"
                         @edit-todo="onStartEditTodo"
                         :key="todo._id"/>
         </template>
@@ -137,6 +151,10 @@ export default {
                         @cancel-editing="onCancelEdit"
                         @save-todo="onSaveEdit"
                         :updating="updating_todo"/>
+      <DeleteModal ref="delete_modal"
+                   @onCancel="onCancelDelete"
+                   @onConfirm="onConfirmDeleteTodo"
+                   message="Are You sure you want to delete item?"/>
     </div>
   </main>
 </template>
