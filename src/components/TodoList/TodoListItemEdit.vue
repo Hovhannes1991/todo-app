@@ -45,7 +45,7 @@ export default {
     },
 
     saveTodo() {
-      if(!this.hasChanges) return;
+      if (!this.hasChanges) return;
 
       if (!this.todo.title?.trim()) {
         this.errors.title = "Field is required";
@@ -71,7 +71,7 @@ export default {
         :disabled="updating"
         :error="errors.title"/>
     <div class="dialog-buttons">
-      <BaseButton label="Save" @click="saveTodo" :loading="updating" :disabled="!hasChanges"/>
+      <BaseButton label="Save" @click="saveTodo" :loading="updating" variant="app-button" :disabled="!hasChanges"/>
       <BaseButton label="Cancel" @click="cancel" :disabled="updating" variant="secondary"/>
     </div>
   </div>
@@ -80,20 +80,21 @@ export default {
 <style scoped lang="scss">
 .edit-modal {
   position: fixed;
-  top: 5rem;
+  top: 7rem;
   left: 50%;
   transform: translateX(-50%);
-  width: 300px;
+  width: 400px;
   max-width: 80vw;
   min-height: 200px;
 
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
   background-color: white;
-  padding: 2rem 2rem 3rem 2rem;
-  box-shadow: 0 0 10px 2px #5caf8a;
-  border-radius: 0.5rem;
+  padding: 3rem 3rem 5rem 3rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
 
   .modal-info {
     font-size: 2rem;
@@ -109,6 +110,11 @@ export default {
       width: 120px;
       min-width: unset;
     }
+  }
+
+  @media screen and (max-width: 450px){
+    width: 300px;
+    padding: 2rem 2rem 3rem 2rem;
   }
 }
 </style>

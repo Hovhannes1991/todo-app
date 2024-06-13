@@ -108,6 +108,7 @@ export default {
 </template>
 
 <style scoped lang="scss">
+$header-bg: #333333;
 @mixin user-menu-item {
   width: 100%;
   text-align: left;
@@ -125,7 +126,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #333;
+  background-color: $header-bg;
   padding: 10px 20px;
   color: white;
 
@@ -155,7 +156,7 @@ export default {
     position: relative;
 
     button.user-menu__btn {
-      background-color: #333;
+      background-color: $header-bg;
       color: white;
       border: none;
       cursor: pointer;
@@ -231,6 +232,7 @@ export default {
       right: 0;
       top: 7rem;
       width: 100%;
+      background-color: $header-bg;
       list-style: none;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
       font-size: 2rem;
@@ -243,7 +245,7 @@ export default {
       a, button {
         @include user-menu-item;
         color: white;
-        background-color: #333333;
+        background-color: $header-bg;
 
         &:hover {
           background-color: #575757;
