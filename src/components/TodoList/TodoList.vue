@@ -18,11 +18,16 @@ export default {
     BaseInput, TodoListEmptyResults, SkeletonListLoader, TodoListSearchAndFilter, TodoListNewItem, TodoListItem
   },
 
+  created() {
+    this.fetchUserTodos();
+  },
+
   data() {
     return {
       search: "",
+      order_by: "asc",
       filters: {
-        status: ""
+        status: []
       },
 
       loading: false,
@@ -33,18 +38,24 @@ export default {
     }
   },
 
-  created() {
-    this.fetchUserTodos();
-  },
-
   computed: {
     ...mapGetters({user: "auth/user", todos: "todos/todos"}),
     todosToShow() {
-      const search_text = this.search.trim().toLowerCase();
-      //todo handle filters
-      if (!this.search) return this.todos;
+      let todos = [...this.todos];
 
-      return this.todos.filter(todo => todo.title.trim().toLowerCase().startsWith(search_text));
+      //Search text
+      const search_text = this.search.trim().toLowerCase();
+      if (this.search) todos = this.searchInTodos(todos, search_text);
+
+      //Filter By Status
+      if (this.filters?.status?.length) {
+        todos = this.filterByStatus(todos);
+      }
+
+      //Order By
+      todos = this.orderBy(todos);
+
+      return todos;
     }
   },
 
@@ -55,6 +66,7 @@ export default {
       updateTodo: "todos/UPDATE_TODO",
       deleteTodo: "todos/DELETE_TODO"
     }),
+
     async fetchUserTodos() {
       this.loading = true;
       try {
@@ -125,6 +137,36 @@ export default {
     onSearchChange(value) {
       this.search = value;
     },
+
+    onFilterChange(value) {
+      this.filters = value;
+    },
+
+    onOrderByChange() {
+      this.order_by = this.order_by === "asc" ? "desc" : "asc";
+    },
+
+    searchInTodos(todo_list, search_text) {
+      return todo_list.filter(todo => todo.title.trim().toLowerCase().startsWith(search_text));
+    },
+
+    filterByStatus(todo_list) {
+      const status = this.filters.status[0];
+      todo_list = todo_list.filter(item => {
+        if (status === "completed") return item.completed;
+        else if (status === "pending") return !item.completed;
+        return true;
+      })
+      return todo_list;
+    },
+
+    orderBy(todo_list) {
+      if (this.order_by === "asc") {
+        return todo_list.toSorted((a, b) => a.updatedAt.localeCompare(b.updatedAt));
+      } else {
+        return todo_list.toSorted((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+      }
+    }
   }
 }
 </script>
@@ -132,7 +174,11 @@ export default {
 <template>
   <main class="todo-list-component">
     <div class="todo-list-container">
-      <TodoListSearchAndFilter @search-change="onSearchChange"/>
+      <TodoListSearchAndFilter :order-by="order_by"
+                               :filters="filters"
+                               @search-change="onSearchChange"
+                               @filter-change="onFilterChange"
+                               @order-change="onOrderByChange"/>
       <TodoListNewItem @add-todo="onAddTodo" :loading="add_todo_loading"/>
       <div class="todo-list">
         <SkeletonListLoader v-if="loading" :items-count="10" :item-styles="{height: '3rem', marginBlock: '1.5rem' }"/>

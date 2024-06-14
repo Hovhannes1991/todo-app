@@ -14,5 +14,7 @@ import {faFolderOpen} from "@fortawesome/free-solid-svg-icons/faFolderOpen";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons/faSpinner";
 import {faEye} from "@fortawesome/free-solid-svg-icons/faEye";
 import {faEyeSlash} from "@fortawesome/free-solid-svg-icons/faEyeSlash";
+import {faArrowUpShortWide} from "@fortawesome/free-solid-svg-icons/faArrowUpShortWide";
+import {faFilter} from "@fortawesome/free-solid-svg-icons/faFilter";
 
-library.add(faBars, faPlus, faPenToSquare, faEye, faEyeSlash, faTrashCan, faFolderOpen, faSpinner, faSearch, faLinkedinIn, faGithub, faFacebook, faTwitter);
+library.add(faBars, faPlus, faPenToSquare, faEye, faEyeSlash, faTrashCan, faFolderOpen, faSpinner, faSearch, faLinkedinIn, faGithub, faFacebook, faTwitter, faArrowUpShortWide, faFilter);
