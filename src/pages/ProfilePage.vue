@@ -5,7 +5,7 @@ import useVuelidate from "@vuelidate/core";
 import {required, email, sameAs} from "@vuelidate/validators";
 import BaseInput from "@/ui/BaseInput.vue";
 import BaseButton from "@/ui/BaseButton.vue";
-import {updateProfile} from "@/api/profile.service.js";
+import {updateProfile, changeEmail, changeEmailConfirm} from "@/api/profile.service.js";
 import {toastError, toastSuccess} from "@/services/toast.service.js";
 import BaseSelect from "@/ui/BaseSelect.vue";
 
@@ -31,11 +31,15 @@ export default {
         postal_code: "",
 
         email: "",
+        new_email: "",
+        confirmation_token: "",
 
-        old_password: "",
+        password: "",
         new_password: "",
         confirm_new_password: ""
       },
+
+      email_verify_token_sent: false,
 
       loading: false,
 
@@ -127,9 +131,40 @@ export default {
       this.loading = false;
     },
 
-    onChangeEmail() {
+    async onChangeEmail() {
       if (!this.formIsValid()) return;
-      console.log(2)
+
+      try {
+        this.loading = true;
+        await changeEmail(this.user_data.new_email, this.user_data.password);
+        toastSuccess(`Verification token send to ${this.user_data.new_email}  email.`);
+        this.email_verify_token_sent = true;
+      } catch (err) {
+        this.handleBackendErrors(err);
+        console.log(err);
+      }
+      this.loading = false;
+    },
+
+    async confirmChangeEmail() {
+      if (!this.formIsValid()) return;
+
+      try {
+        this.loading = true;
+        const {data} = await changeEmailConfirm(this.user_data.confirmation_token);
+        toastSuccess(data.message);
+        this.updateUserProperty({email: data.user.email});
+        this.email_verify_token_sent = false;
+      } catch (err) {
+        console.log(err);
+        const token_error = err?.response?.data?.errors?.token;
+        if (token_error) {
+          this.backend_errors.confirmation_token = token_error;
+        } else {
+          toastError("Something went wrong");
+        }
+      }
+      this.loading = false;
     },
 
     onChangePassword() {
@@ -140,7 +175,8 @@ export default {
 
   created() {
     for (let key in this.user) {
-      this.user_data[key] = typeof this.user[key] === "object" ? {...this.user[key]} : this.user[key];
+      const value = this.user[key] && typeof this.user[key] === "object" ? {...this.user[key]} : this.user[key];
+      this.user_data[key] = value || "";
     }
 
     if (!this.countries?.length) {
@@ -157,15 +193,22 @@ export default {
       },
     }
 
-    const change_email_rules = {
-      user_data: {
-        email: {required, email}
-      },
-    }
+    const change_email_rules = this.email_verify_token_sent ?
+        {
+          user_data: {
+            confirmation_token: {required},
+          }
+        }
+        : {
+          user_data: {
+            new_email: {required, email},
+            password: {required},
+          },
+        }
 
     const change_password_rules = {
       user_data: {
-        old_password: {required},
+        password: {required},
         new_password: {required},
         confirm_new_password: {required, sameAs: sameAs(this.user_data.new_password)}
       }
@@ -203,10 +246,12 @@ export default {
             <BaseInput v-model="user_data.firstname"
                        :error="errorMessages.firstname"
                        @input="removeBackendError('firstname')"
+                       name="firstname"
                        placeholder="Firstname"/>
             <BaseInput v-model="user_data.lastname"
                        :error="errorMessages.lastname"
                        @input="removeBackendError('lastname')"
+                       name="lastname"
                        placeholder="Lastname"/>
             <BaseSelect :options="countries"
                         @on-change="onDropdownChange($event, 'country')"
@@ -214,23 +259,29 @@ export default {
                         :error-message="errorMessages.country"
                         option-label="country"
                         option-value="iso3"
+                        name="country"
                         placeholder="Country"
+                        :loading="!countries?.length"
                         :disabled="!countries?.length"/>
 
             <BaseSelect :options="cities"
                         @on-change="onDropdownChange($event, 'city')"
                         :value="user_data.city"
                         :error-message="errorMessages.city"
+                        name="city"
                         placeholder="City"
+                        :loading="!cities?.length || !this.user_data.country"
                         :disabled="!cities?.length || !this.user_data.country"/>
 
             <BaseInput v-model="user_data.address"
                        :error="errorMessages.address"
                        @input="removeBackendError('address')"
+                       name="address"
                        placeholder="Address"/>
             <BaseInput v-model="user_data.postal_code"
                        :error="errorMessages.postal_code"
                        @input="removeBackendError('postal_code')"
+                       name="postal_code"
                        placeholder="Postal code"/>
 
 
@@ -239,11 +290,39 @@ export default {
         </div>
 
         <div v-show="active_tab === 'change_email'" class="content">
-          <form @submit.prevent="onChangeEmail" autocomplete="on">
-            <BaseInput v-model="user.email" disabled/>
-            <BaseInput v-model="user_data.email" :error="errorMessages.email"/>
+          <form v-show="!email_verify_token_sent" @submit.prevent="onChangeEmail" autocomplete="on">
+            <BaseInput v-model="user.email" label="Old E-mail" disabled/>
+            <BaseInput v-model="user_data.new_email"
+                       @input="removeBackendError('new_email')"
+                       label="New E-mail" :error="errorMessages.new_email"
+                       name="email"/>
+            <BaseInput v-model="user_data.password"
+                       @input="removeBackendError('password')"
+                       type="password"
+                       label="Current Password"
+                       :error="errorMessages.password"
+                       name="current_password"/>
 
             <BaseButton label="Change E-mail" type="submit" variant="app-button" :loading="loading"/>
+          </form>
+
+          <form v-show="email_verify_token_sent" @submit.prevent="confirmChangeEmail">
+            <p class="verification-token-info">Verification token is sent to mail {{ user_data.new_email }}</p>
+            <BaseInput v-model="user_data.confirmation_token"
+                       @input="removeBackendError('confirmation_token')"
+                       label="Token" :error="errorMessages.confirmation_token"
+                       name="email"/>
+
+            <div class="buttons-wrapper">
+              <BaseButton @click="confirmChangeEmail"
+                          label="Confirm"
+                          variant="app-button"
+                          :loading="loading"/>
+              <BaseButton @click="email_verify_token_sent = false"
+                          label="Cancel"
+                          variant="secondary"
+                          :disabled="loading"/>
+            </div>
           </form>
         </div>
       </template>
@@ -290,7 +369,7 @@ export default {
 
       &.active-tab {
         background: var(--main-bg-color);
-        color: var( --main-fg-color);
+        color: var(--main-fg-color);
         cursor: default;
       }
     }
@@ -299,6 +378,18 @@ export default {
   form {
     display: flex;
     flex-direction: column;
+    gap: 1rem;
+  }
+
+  .verification-token-info {
+    margin-top: 2rem;
+    font-size: 2rem;
+    color: white;
+    text-align: center;
+  }
+
+  .buttons-wrapper {
+    display: flex;
     gap: 1rem;
   }
 }

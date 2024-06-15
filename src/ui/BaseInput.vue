@@ -64,6 +64,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    autocomplete: {
+      type: String,
+      default: ""
     }
   },
 
@@ -123,6 +127,7 @@ export default {
           :disabled="disabled"
           :tabindex="tabIndex"
           :name="name"
+          :autocomplete="this.autocomplete || this.name"
           :style="inputStyles"/>
       <FontAwesomeIcon v-if="icon"
                        @click="onIconClick"

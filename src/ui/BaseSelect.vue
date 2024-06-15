@@ -21,6 +21,10 @@ export default {
       type: String,
       default: null
     },
+    loading: {
+      type: Boolean,
+      default: false
+    },
     disabled: {
       type: Boolean,
       default: false
@@ -58,6 +62,7 @@ export default {
               @change="onChange"
               filter
               showClear
+              :loading="loading"
               :disabled="disabled"
               :option-value="optionValue"
               :optionLabel="optionLabel"

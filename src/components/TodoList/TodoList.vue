@@ -40,6 +40,11 @@ export default {
 
   computed: {
     ...mapGetters({user: "auth/user", todos: "todos/todos"}),
+
+    hasFilterByStatus() {
+      return !!this.filters?.status?.length;
+    },
+
     todosToShow() {
       let todos = [...this.todos];
 
@@ -48,7 +53,7 @@ export default {
       if (this.search) todos = this.searchInTodos(todos, search_text);
 
       //Filter By Status
-      if (this.filters?.status?.length) {
+      if (this.hasFilterByStatus) {
         todos = this.filterByStatus(todos);
       }
 
