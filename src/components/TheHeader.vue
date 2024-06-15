@@ -71,7 +71,7 @@ export default {
   <header class="the-header">
     <div class="logo">
       <RouterLink to="home">
-        <img src="@/assets/logo-new.png" alt="Logo">
+        <img src="@/assets/logo.svg" alt="Logo">
         <div class="title">Todo App</div>
       </RouterLink>
     </div>
