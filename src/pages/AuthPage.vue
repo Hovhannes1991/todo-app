@@ -71,7 +71,7 @@ export default {
     const rules = {
       user: {
         email: {required, email},
-        password: {required, minLength: minLength(8)}
+        password: {required}
       },
     }
 

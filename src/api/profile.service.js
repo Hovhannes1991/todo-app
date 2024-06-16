@@ -13,6 +13,6 @@ export const changeEmailConfirm = async (token) => {
     return httpService.post("/profile/change-email-confirm", {token});
 }
 
-export const changePassword = async (user_data) => {
-    return httpService.post("/profile/change-password", user_data);
+export const changePassword = async (old_password, new_password) => {
+    return httpService.post("/profile/change-password", {old_password, new_password});
 }

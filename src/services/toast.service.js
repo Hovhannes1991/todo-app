@@ -10,7 +10,7 @@ export const toastWarn = (message) => {
 }
 
 export const toastError = (message) => {
-    toast.success(message, {transition: "bounce", autoClose});
+    toast.error(message, {transition: "bounce", autoClose});
 }
 
 export const toastService = {
