@@ -158,8 +158,11 @@ export default {
     filterByStatus(todo_list) {
       const status = this.filters.status[0];
       todo_list = todo_list.filter(item => {
+        if (item.just_updated) return true; //keep animation for just toggled items
+
         if (status === "completed") return item.completed;
         else if (status === "pending") return !item.completed;
+
         return true;
       })
       return todo_list;

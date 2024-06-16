@@ -12,18 +12,32 @@ export default {
     todo: Object
   },
 
+  beforeUnmount() {
+    this.clearDispatchTimeout();
+  },
+
+  data() {
+    return {
+      timeout_id: null
+    }
+  },
+
   emits: ["editTodo", "deleteTodo"],
 
   methods: {
-    ...mapMutations({updateTodo: "todos/UPDATE_TODO",}),
+    ...mapMutations({updateTodo: "todos/UPDATE_TODO"}),
     async toggleCompleted(id, completed) {
       try {
         //optimistic update VUEX
-        this.updateTodo({id, updated_props: {completed}});
+        this.updateTodo({id, updated_props: {completed, just_updated: true}});
+        this.timeout_id = setTimeout(() => {
+          this.updateTodo({id, updated_props: {just_updated: false}});
+        }, 700)
         await toggleTodo(id);
       } catch (err) {
         //revert optimistic update
-        this.updateTodo({id, updated_props: {completed}});
+        this.updateTodo({id, updated_props: {completed: !completed, just_updated: false}});
+        this.clearDispatchTimeout();
         console.log(err)
       }
     },
@@ -34,6 +48,10 @@ export default {
 
     editTodo(todo) {
       this.$emit("editTodo", todo);
+    },
+
+    clearDispatchTimeout() {
+      if (this.timeout_id) clearTimeout(this.timeout_id);
     }
   }
 }
