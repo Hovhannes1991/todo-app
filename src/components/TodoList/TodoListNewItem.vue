@@ -38,7 +38,7 @@ export default {
                @on-icon-click="addTodo"
                @keydown.enter="addTodo"
                variant="underlined"
-               placeholder="Todo title"
+               :placeholder="$t('todo_title')"
                :icon="loading ? 'spinner' : 'plus'"
                :spin-icon="loading"
                :main_color="color"

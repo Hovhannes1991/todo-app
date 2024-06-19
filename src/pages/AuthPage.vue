@@ -104,22 +104,27 @@ export default {
 
       return [
         {
-          placeholder: "First name",
+          placeholder: this.$t("first_name"),
           name: "firstname",
           type: "text",
           login_item: false,
           tab_index: !this.isLoginSection ? "0" : "-1"
         },
         {
-          placeholder: "Last name",
+          placeholder: this.$t("last_name"),
           name: "lastname",
           type: "text",
           login_item: false,
           tab_index: !this.isLoginSection ? "0" : "-1"
         },
-        {placeholder: "E-mail", name: "email", type: "email", login_item: true, tab_index: "0"},
         {
-          placeholder: "Password",
+          placeholder: this.$t("email"),
+          name: "email",
+          type: "email",
+          login_item: true,
+          tab_index: "0"},
+        {
+          placeholder: this.$t("password"),
           name: "password",
           type: password_type,
           login_item: true,
@@ -128,7 +133,7 @@ export default {
           tab_index: "0"
         },
         {
-          placeholder: "Confirm Password",
+          placeholder: this.$t("confirm_password"),
           name: "confirm_password",
           type: password_type,
           login_item: false,
@@ -138,7 +143,7 @@ export default {
     },
 
     submitButtonLabel() {
-      return this.isLoginSection ? "Log in" : "Sign up";
+      return this.isLoginSection ? this.$t("login") : this.$t("sign_up");
     },
 
     errorMessages() {
@@ -208,7 +213,7 @@ export default {
       try {
         this.loading = true;
         const {data} = await login(this.user);
-        setGetPageFlushMessage(`Welcome ${data.user.firstname.toUpperCase()}`);
+        setGetPageFlushMessage(`${this.$t('welcome')} ${data.user.firstname.toUpperCase()}`);
         this.onAuthSuccess(data);
       } catch (err) {
         console.log(err)

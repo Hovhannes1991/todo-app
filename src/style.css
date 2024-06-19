@@ -1,6 +1,8 @@
 @import "./styles/fonts.scss";
 @import "./styles/reset.css";
-@import "styles/colors.css";
+@import "./styles/flags.css";
+@import "./styles/colors.css";
+@import "./styles/utils.scss";
 /*Prime Vue*/
 @import "primeflex/primeflex.css";
 @import "primeicons/primeicons.css";
@@ -24,6 +26,12 @@ html {
     font-size: 10px;
 }
 
+*,
+*::before,
+*::after {
+    font-family: inherit;
+}
+
 body {
     font-family: Roboto, sans-serif;
     line-height: 1.5;
@@ -37,16 +45,6 @@ body {
 
 .Toastify {
     font-size: 1.6rem;
-}
-
-.cursor-pointer {
-    cursor: pointer;
-}
-
-.text-ellipsis {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 

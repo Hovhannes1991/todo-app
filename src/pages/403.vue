@@ -7,8 +7,8 @@ export default {
 <template>
   <div class="access-denied">
     <h1 class="error-403">403</h1>
-    <div class="message">Access Denied</div>
-    <RouterLink :to="{name: 'home'}">Go to Home page</RouterLink>
+    <div class="message">{{ $t("access_denied") }}</div>
+    <RouterLink :to="{name: 'home'}">{{ $t("go_to_home_page") }}</RouterLink>
   </div>
 </template>
 

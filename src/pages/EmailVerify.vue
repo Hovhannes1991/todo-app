@@ -71,7 +71,7 @@ export default {
         if (token_error) {
           this.errors.token = token_error;
         } else {
-          toastError("Something went wrong");
+          toastError(this.$t('default_error_message'));
         }
       }
       this.loading = false;
@@ -86,10 +86,10 @@ export default {
       } catch (err) {
         this.send_again_disabled = false;
         const token_error = err.response?.data?.token;
-        if(token_error) {
+        if (token_error) {
           this.errors.token = token_error;
         } else {
-          toastError("Something went wrong");
+          toastError(this.$t('default_error_message'));
         }
       }
     },
@@ -120,10 +120,11 @@ export default {
 
 <template>
   <div class="email-verification">
-    <h1 class="email-verification__title">Please verify your E-mail</h1>
-    <p class="email-verification__message">Verification token is send to your E-mail <span
-        class="user-email">{{ user_email }}</span></p>
-    <p class="email-verification__span-warning">If you don't see E-mail in your inbox please check spams</p>
+    <h1 class="email-verification__title">{{ $t('please_verify_your_email')}}</h1>
+    <p class="email-verification__message">{{ $t('verification_token_is_send_to_your_email') }}
+      <span class="user-email">{{ user_email }}</span>
+    </p>
+    <p class="email-verification__span-warning">{{ $t('check_spam_info') }}</p>
     <form @submit.prevent="onSubmit">
       <BaseInput
           v-model="user_email"
@@ -140,16 +141,16 @@ export default {
           tab-index="0"/>
 
       <div class="buttons">
-        <BaseButton label="Verify" variant="app-button" type="submit" :loading="loading"/>
+        <BaseButton :label="$t('verify')" variant="app-button" type="submit" :loading="loading"/>
 
         <div class="send-again-btn">
           <BaseButton @click="sendAgain"
                       :disabled="send_again_disabled"
-                      label="Send again"
+                      :label="$t('send_again')"
                       variant="link"
                       type="button"/>
           <p v-if="send_again_countdown">
-            You can request new token only after {{ formattedSendAgainCountdown }}
+            {{ $t('you_can_request_new_token_only_after') }} {{ formattedSendAgainCountdown }}
           </p>
         </div>
       </div>

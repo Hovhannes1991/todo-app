@@ -25,7 +25,7 @@ export default {
     <BaseButton v-for="section in sections"
                 :variant="selected_section === section ? 'app-button' : 'secondary'"
                 @click="selectSection(section)"
-                :label="section"
+                :label="$t(section)"
                 :key="section"/>
   </div>
 </template>

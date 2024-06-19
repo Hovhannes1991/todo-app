@@ -39,7 +39,7 @@ export default {
 <template>
   <footer class="the-footer">
     <div class="footer-row footer-row-1">
-      <p>Contacts</p>
+      <p>{{ $t('contacts') }}</p>
       <ul class="social">
         <li v-for="item in social" :key="item.name">
           <a :href="item.href" target="_blank" :aria-label="`${item.name} link`">

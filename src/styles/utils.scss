@@ -1,0 +1,15 @@
+.hk__cursor-pointer {
+  cursor: pointer;
+}
+
+.ht__text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hk__flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

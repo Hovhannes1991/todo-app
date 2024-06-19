@@ -1,3 +1,4 @@
+import {i18n} from "@/i18n/index.js";
 import * as types from '../mutation-types';
 import {getTokens, clearTokens, saveUserData, clearUserData, setGetPageFlushMessage} from "@/helpers/storage.js";
 import {getUserByToken, logout} from "@/api/auth.service.js";
@@ -47,7 +48,7 @@ export const user_store = {
                 await logout();
                 clearTokens();
                 clearUserData();
-                setGetPageFlushMessage("You are successfully logged out");
+                setGetPageFlushMessage(i18n.global.t("logout_success"));
                 context.commit(types.UPDATE_USER, {user: null});
             } catch (err) {
                 console.log(err);

@@ -7,8 +7,8 @@ export default {
 <template>
   <div class="page-not-found">
     <h1 class="error-404">404</h1>
-    <div class="message">Oops!!! Page is not found</div>
-    <RouterLink :to="{name: 'home'}">Go to Home page</RouterLink>
+    <div class="message">{{ $t("oops_page_not_found") }}</div>
+    <RouterLink :to="{name: 'home'}">{{ $t("go_to_home_page") }}</RouterLink>
   </div>
 </template>
 

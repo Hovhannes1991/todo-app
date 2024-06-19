@@ -45,7 +45,7 @@ export default {
   <div class="todo-list-search">
     <BaseInput icon="search"
                v-model="search"
-               placeholder="Search"
+               :placeholder="$t('search')"
                variant="underlined"
                main_color="black"
                :icon-styles="search_icon_styles"/>

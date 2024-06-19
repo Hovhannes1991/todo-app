@@ -30,7 +30,7 @@ export default {
 
 <template>
 <div class="sort-by" @click="$emit('onOrderChange')">
-  <span>Sorted by {{ sortByKey }}</span>
+  <span>{{ $t('sorted_by') }} {{ sortByKey }}</span>
   <span :class="iconClass">
     <font-awesome-icon icon="arrow-up-short-wide"/>
   </span>

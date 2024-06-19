@@ -1,11 +1,14 @@
+import {i18n} from "@/i18n/index.js";
+
+
 export const filterOptions = () => {
     return [
         {
-            label: "Status",
+            label: i18n.global.t("status"),
             code: "status",
             items: [
-                {label: "Completed", value: "status-completed"},
-                {label: "Pending", value: "status-pending"}
+                {label: i18n.global.t("completed"), value: "status-completed"},
+                {label: i18n.global.t("pending"), value: "status-pending"}
             ]
         }
     ];

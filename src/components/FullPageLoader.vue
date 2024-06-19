@@ -7,7 +7,7 @@ export default {
 <template>
   <div class="full-page-loader">
     <div class="loader"></div>
-    <p class="loader-text">Loading...</p>
+    <p class="loader-text">{{ $t("loading") }}</p>
   </div>
 </template>
 

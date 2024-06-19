@@ -46,3 +46,12 @@ export const setGetPageFlushMessage = (message, type = "success") => {
         return {message: data?.message, type: data?.type};
     }
 }
+
+
+export const getSelectedLocale = () => {
+    return localStorage.getItem("locale") || null;
+}
+
+export const setSelectedLocale = (language) => {
+    localStorage.setItem("locale", language);
+}

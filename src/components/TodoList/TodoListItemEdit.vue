@@ -48,7 +48,7 @@ export default {
       if (!this.hasChanges) return;
 
       if (!this.todo.title?.trim()) {
-        this.errors.title = "Field is required";
+        this.errors.title = this.$t("field_is_required");
         return;
       }
       this.$emit("saveTodo", this.todo);
@@ -63,7 +63,7 @@ export default {
 
 <template>
   <div v-if="show" class="edit-modal" @keydown.esc="cancel">
-    <p class="modal-info">Editing: <span><b>{{ original_title }}</b></span></p>
+    <p class="modal-info">{{ $t('title') }}: <span><b>{{ original_title }}</b></span></p>
     <BaseInput
         ref="title_ref"
         v-model="todo.title"
@@ -71,8 +71,8 @@ export default {
         :disabled="updating"
         :error="errors.title"/>
     <div class="dialog-buttons">
-      <BaseButton label="Save" @click="saveTodo" :loading="updating" variant="app-button" :disabled="!hasChanges"/>
-      <BaseButton label="Cancel" @click="cancel" :disabled="updating" variant="secondary"/>
+      <BaseButton :label="$t('save')" @click="saveTodo" :loading="updating" variant="app-button" :disabled="!hasChanges"/>
+      <BaseButton :label="$t('cancel')" @click="cancel" :disabled="updating" variant="secondary"/>
     </div>
   </div>
 </template>

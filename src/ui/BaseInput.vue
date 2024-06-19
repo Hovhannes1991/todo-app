@@ -134,7 +134,7 @@ export default {
                        :icon="icon"
                        :style="iconStyles"
                        :spin="spinIcon"
-                       :class="{'cursor-pointer': icon_clickable}"/>
+                       :class="{'hk__cursor-pointer': icon_clickable}"/>
     </div>
     <span v-if="error" class="error-message">{{ error }}</span>
   </label>

@@ -109,20 +109,21 @@ export default {
 
 <template>
   <form v-show="!tokenSent" @submit.prevent="onChangeEmail" autocomplete="on">
-    <BaseInput v-model="user.email" label="Old E-mail" disabled/>
+    <BaseInput v-model="user.email" :label="$t('old_email')" disabled/>
 
     <BaseInput v-model="user_data.new_email"
                @input="removeBackendError('new_email')"
-               label="New E-mail" :error="errorMessages.new_email"
+               :label="$t('new_email')"
+               :error="errorMessages.new_email"
                name="email"/>
     <BaseInput v-model="user_data.password"
                @input="removeBackendError('password')"
                type="password"
-               label="Current Password"
+               :label="$t('current_password')"
                :error="errorMessages.password"
                name="current_password"/>
 
-    <BaseButton label="Change E-mail"
+    <BaseButton :label="$t('change_email')"
                 :disabled="user.email === user_data.new_email"
                 type="submit"
                 variant="app-button"
@@ -138,11 +139,11 @@ export default {
 
     <div class="buttons-wrapper">
       <BaseButton @click="confirmChangeEmail"
-                  label="Confirm"
+                  :label="$t('confirm')"
                   variant="app-button"
                   :loading="loading"/>
       <BaseButton @click="cancelChangeEmail"
-                  label="Cancel"
+                  :label="$t('cancel')"
                   variant="secondary"
                   :disabled="loading"/>
     </div>

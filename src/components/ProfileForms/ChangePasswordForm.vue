@@ -81,25 +81,25 @@ export default {
   <form @submit.prevent="changePassword" autocomplete="on">
     <BaseInput v-model="user_data.old_password"
                type="password"
-               label="Old Password"
+               :label="$t('old_password')"
                :error="errorMessages.old_password"
                @input="removeBackendError('old_password')"
                name="password"/>
     <BaseInput v-model="user_data.new_password"
                type="password"
-               label="New Password"
+               :label="$t('new_password')"
                :error="errorMessages.new_password"
                @input="removeBackendError('new_password')"
                name="new_password"/>
     <BaseInput v-model="user_data.confirm_new_password"
                type="password"
-               label="New Password"
+               :label="$t('confirm_new_password')"
                :error="errorMessages.confirm_new_password"
                @input="removeBackendError('confirm_new_password')"
                name="confirm_new_password"/>
 
 
-    <BaseButton label="Submit" type="submit" variant="app-button" :loading="loading"/>
+    <BaseButton :label="$t('submit')" type="submit" variant="app-button" :loading="loading"/>
   </form>
 </template>
 

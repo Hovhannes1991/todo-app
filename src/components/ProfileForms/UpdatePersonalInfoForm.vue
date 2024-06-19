@@ -116,12 +116,12 @@ export default {
                :error="errorMessages.firstname"
                @input="removeBackendError('firstname')"
                name="firstname"
-               placeholder="Firstname"/>
+               :placeholder="$t('first_name')"/>
     <BaseInput v-model="user_data.lastname"
                :error="errorMessages.lastname"
                @input="removeBackendError('lastname')"
                name="lastname"
-               placeholder="Lastname"/>
+               :placeholder="$t('last_name')"/>
     <BaseSelect :options="countries"
                 @on-change="onDropdownChange($event, 'country')"
                 :value="user_data.country"
@@ -129,7 +129,7 @@ export default {
                 option-label="country"
                 option-value="iso3"
                 name="country"
-                placeholder="Country"
+                :placeholder="$t('country')"
                 :loading="!countries?.length"
                 :disabled="!countries?.length"/>
 
@@ -138,22 +138,22 @@ export default {
                 :value="user_data.city"
                 :error-message="errorMessages.city"
                 name="city"
-                placeholder="City"
+                :placeholder="$t('city')"
                 :disabled="!cities?.length || !this.user_data.country"/>
 
     <BaseInput v-model="user_data.address"
                :error="errorMessages.address"
                @input="removeBackendError('address')"
                name="address"
-               placeholder="Address"/>
+               :placeholder="$t('address')"/>
     <BaseInput v-model="user_data.postal_code"
                :error="errorMessages.postal_code"
                @input="removeBackendError('postal_code')"
                name="postal_code"
-               placeholder="Postal code"/>
+               :placeholder="$t('postal_code')"/>
 
 
-    <BaseButton label="Submit" type="submit" variant="app-button" :loading="loading" :disabled="!hasChanges"/>
+    <BaseButton :label="$t('submit')" type="submit" variant="app-button" :loading="loading" :disabled="!hasChanges"/>
   </form>
 </template>
 

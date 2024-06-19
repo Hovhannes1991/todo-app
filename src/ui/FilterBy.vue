@@ -77,7 +77,7 @@ export default {
                    optionGroupChildren="items"
                    optionGroupLabel="label"
                    optionLabel="label"
-                   placeholder="Filters"
+                   :placeholder="$t('filters')"
                    :maxSelectedLabels="3"
                    class="w-full md:w-20rem">
         <template #optiongroup="slotProps">

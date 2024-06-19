@@ -39,10 +39,10 @@ export default {
 
 <template>
   <Dialog v-model:visible="visible" :style="{ width: '30rem' }">
-    <p>Are You Sure you want to delete todo item?</p>
+    <p>{{ $t('are_you_sure_you_want_to_delete_item') }}</p>
     <div class="flex justify-content-end gap-2">
-      <Button type="button" label="Cancel" severity="secondary" @click="cancel"></Button>
-      <Button type="button" label="Delete" severity="danger" @click="confirm"></Button>
+      <Button type="button" :label="$t('cancel')" severity="secondary" @click="cancel"></Button>
+      <Button type="button" :label="$t('delete')" severity="danger" @click="confirm"></Button>
     </div>
   </Dialog>
 </template>

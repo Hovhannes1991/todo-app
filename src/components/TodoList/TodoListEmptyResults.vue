@@ -15,8 +15,8 @@ export default {
 
 <template>
   <div class="empty-results">
-    <span v-if="searchText">Your search didn't match any results</span>
-    <span v-else>There is no items</span>
+    <span v-if="searchText">{{ $t('your_search_didnt_match_any_results') }}</span>
+    <span v-else>{{ $t('there_is_no_items') }}</span>
     <div>
       <FontAwesomeIcon icon="folder-open" size="3x"/>
     </div>

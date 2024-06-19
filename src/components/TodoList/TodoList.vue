@@ -87,10 +87,10 @@ export default {
       try {
         this.add_todo_loading = true;
         const {data} = await addTodo(todo);
-        toastSuccess("Todo added successfully");
+        toastSuccess(this.$t("todo_add_success"));
         this.addTodo({todo: data.new_todo});
       } catch (err) {
-        toastError("Something went wrong");
+        toastError(this.$t('default_error_message'));
       }
       this.add_todo_loading = false;
     },
@@ -208,7 +208,7 @@ export default {
       <DeleteModal ref="delete_modal"
                    @onCancel="onCancelDelete"
                    @onConfirm="onConfirmDeleteTodo"
-                   message="Are You sure you want to delete item?"/>
+                   :message="$t('are_you_sure_you_want_to_delete_item')"/>
     </div>
   </main>
 </template>

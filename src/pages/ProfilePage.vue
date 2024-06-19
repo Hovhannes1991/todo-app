@@ -60,7 +60,7 @@ export default {
     handleBackendErrors(err) {
       const backend_errors = err?.response?.data?.errors;
       if (!backend_errors) {
-        toastError("Something went wrong");
+        toastError(this.$t('default_error_message'));
         return;
       }
       backend_errors.forEach(({msg, path}) => {
@@ -107,7 +107,7 @@ export default {
         if (token_error) {
           this.backend_errors.confirmation_token = token_error;
         } else {
-          toastError("Something went wrong");
+          toastError(this.$t('default_error_message'));
         }
       }
       this.loading = false;
@@ -124,7 +124,7 @@ export default {
         if (password_error) {
           this.backend_errors.old_password = password_error;
         } else {
-          toastError("Something went wrong");
+          toastError(this.$t('default_error_message'));
         }
       }
       this.loading = false;
