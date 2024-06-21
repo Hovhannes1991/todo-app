@@ -63,6 +63,6 @@
   "delete_account": "Ջնջել հաշիվը",
   "error__field_is_required": "Դաշտը պարտադիր է լրացնել",
   "error__invalid_email_format": "Էլփոստի ձևաչափը անվավեր է",
-  "error__passwords_min_length": "Գաղտնաբառի երկարությունը պետք է լինի առնվազն 8 նիշ",
+  "error__passwords_min_length": "Գաղտնաբառի երկարությունը պետք է լինի առնվազն __var__min_length__var__ նիշ",
   "error__passwords_same_as": "Գաղտնաբառերը չեն համընկնում"
 }

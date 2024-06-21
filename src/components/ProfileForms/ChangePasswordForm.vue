@@ -70,7 +70,8 @@ export default {
         new_password: {
           required: helpers.withMessage(() => this.$t("error__field_is_required"), required),
           minLength: helpers.withMessage(({$params}) => {
-            return this.$t("error__passwords_min_length").replace("__var__min_length__var__", 8);
+            console.log($params)
+            return this.$t("error__passwords_min_length").replace("__var__min_length__var__", $params.min);
           }, minLength(8))
         },
         confirm_new_password: {

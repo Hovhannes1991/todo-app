@@ -63,6 +63,6 @@
   "delete_account": "Удалить аккаунт",
   "error__field_is_required": "Поле обязательное для заполнения",
   "error__invalid_email_format": "Неверный формат почты",
-  "error__passwords_min_length": "Длина пароля должна быть не менее 8 символов.",
+  "error__passwords_min_length": "Длина пароля должна быть не менее __var__min_length__var__ символов.",
   "error__passwords_same_as": "Пароли не совпадают"
 }
