@@ -1,7 +1,7 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import useVuelidate from "@vuelidate/core";
-import {required} from "@vuelidate/validators";
+import {helpers, required} from "@vuelidate/validators";
 import BaseButton from "@/ui/BaseButton.vue";
 import BaseInput from "@/ui/BaseInput.vue";
 import BaseSelect from "@/ui/BaseSelect.vue";
@@ -98,8 +98,12 @@ export default {
   validations() {
     return {
       user_data: {
-        firstname: {required},
-        lastname: {required}
+        firstname: {
+          required: helpers.withMessage(() => this.$t("error__field_is_required"), required)
+        },
+        lastname: {
+          required: helpers.withMessage(() => this.$t("error__field_is_required"), required)
+        }
       },
     }
   },

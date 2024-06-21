@@ -34,6 +34,7 @@
   "old_password": "Старый пароль",
   "new_password": "Новый пароль",
   "confirm_new_password": "Подтвердите новый пароль",
+  "change_password": "Изменить пароль",
   "country": "Страна",
   "city": "Город",
   "address": "Адрес",
@@ -41,6 +42,7 @@
   "title": "Заголовок",
   "todo_add_success": "Todo успешно добавлено",
   "todo_title": "Заголовок Todo",
+  "sort_by__date": "По дате",
   "are_you_sure_you_want_to_delete_item": "Вы уверены, что хотите удалить элемент?",
   "your_search_didnt_match_any_results": "Ваш поиск не дал результатов",
   "there_is_no_items": "Ничего не найдено",
@@ -56,5 +58,11 @@
   "verification_token_is_send_to_your_email": "Токен подтверждения отправлен на ваш адрес электронной почты.",
   "verification_token_is_sent_to_mail": "Токен подтверждения отправлен на почту",
   "check_spam_info": "Если вы не видите письмо во входящих, проверьте папку «Спам».",
-  "you_can_request_new_token_only_after": "Вы можете запросить новый токен только после"
+  "you_can_request_new_token_only_after": "Вы можете запросить новый токен только после",
+  "personal_information": "Персональная информация",
+  "delete_account": "Удалить аккаунт",
+  "error__field_is_required": "Поле обязательное для заполнения",
+  "error__invalid_email_format": "Неверный формат почты",
+  "error__passwords_min_length": "Длина пароля должна быть не менее 8 символов.",
+  "error__passwords_same_as": "Пароли не совпадают"
 }

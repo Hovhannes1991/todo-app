@@ -1,6 +1,6 @@
 <script>
 import useVuelidate from "@vuelidate/core";
-import {minLength, required, sameAs} from "@vuelidate/validators";
+import {helpers, minLength, required, sameAs} from "@vuelidate/validators";
 import BaseButton from "@/ui/BaseButton.vue";
 import BaseInput from "@/ui/BaseInput.vue";
 import BaseSelect from "@/ui/BaseSelect.vue";
@@ -64,9 +64,19 @@ export default {
   validations() {
     return {
       user_data: {
-        old_password: {required},
-        new_password: {required, minLength: minLength(8)},
-        confirm_new_password: {required, sameAs: sameAs(this.user_data.new_password)}
+        old_password: {
+          required: helpers.withMessage(() => this.$t("error__field_is_required"), required)
+        },
+        new_password: {
+          required: helpers.withMessage(() => this.$t("error__field_is_required"), required),
+          minLength: helpers.withMessage(({$params}) => {
+            return this.$t("error__passwords_min_length").replace("__var__min_length__var__", 8);
+          }, minLength(8))
+        },
+        confirm_new_password: {
+          required: helpers.withMessage(() => this.$t("error__field_is_required"), required),
+          sameAs: helpers.withMessage(() => this.$t("error__passwords_same_as"), sameAs(this.user_data.new_password))
+        }
       }
     }
   },

@@ -28,6 +28,14 @@ export default {
   computed: {
     hasChanges() {
       return this.original_title !== this.todo.title;
+    },
+
+    errorMessages() {
+      const error_messages = {}
+      for (let key in this.errors) {
+        error_messages[key] = this.errors[key] ? this.$t(this.errors[key]) : null;
+      }
+      return error_messages;
     }
   },
 
@@ -44,11 +52,15 @@ export default {
       this.show = false;
     },
 
+    removeErrors(name) {
+      this.errors[name] = null;
+    },
+
     saveTodo() {
       if (!this.hasChanges) return;
 
       if (!this.todo.title?.trim()) {
-        this.errors.title = this.$t("field_is_required");
+        this.errors.title = "field_is_required";
         return;
       }
       this.$emit("saveTodo", this.todo);
@@ -67,9 +79,10 @@ export default {
     <BaseInput
         ref="title_ref"
         v-model="todo.title"
+        @input="removeErrors('title')"
         @keydown.enter="saveTodo"
         :disabled="updating"
-        :error="errors.title"/>
+        :error="errorMessages.title"/>
     <div class="dialog-buttons">
       <BaseButton :label="$t('save')" @click="saveTodo" :loading="updating" variant="app-button" :disabled="!hasChanges"/>
       <BaseButton :label="$t('cancel')" @click="cancel" :disabled="updating" variant="secondary"/>

@@ -31,7 +31,7 @@
 <script>
 import {mapMutations} from "vuex";
 import useVuelidate from "@vuelidate/core";
-import {required, email, minLength, sameAs, helpers} from "@vuelidate/validators";
+import {required, email, sameAs, helpers} from "@vuelidate/validators";
 import BaseButton from "@/ui/BaseButton.vue";
 import BaseInput from "@/ui/BaseInput.vue";
 import SectionSwitcher from "@/components/SectionSwitcher.vue";
@@ -70,15 +70,27 @@ export default {
   validations() {
     const rules = {
       user: {
-        email: {required, email},
-        password: {required}
+        email: {
+          required: helpers.withMessage(() => this.$t("error__field_is_required"), required),
+          email: helpers.withMessage(() => this.$t("error__invalid_email_format"), email)
+        },
+        password: {
+          required: helpers.withMessage(() => this.$t("error__field_is_required"), required)
+        },
       },
     }
 
     if (!this.isLoginSection) {
-      rules.user.firstname = {required}
-      rules.user.lastname = {required}
-      rules.user.confirm_password = {required, sameAs: sameAs(this.user.password)}
+      rules.user.firstname = {
+        required: helpers.withMessage(() => this.$t("error__field_is_required"), required)
+      }
+      rules.user.lastname = {
+        required: helpers.withMessage(() => this.$t("error__field_is_required"), required)
+      }
+      rules.user.confirm_password = {
+        required: helpers.withMessage(() => this.$t("error__field_is_required"), required),
+        sameAs: helpers.withMessage(() => this.$t("error__passwords_same_as"), sameAs(this.user.password))
+      }
     }
 
     for (let key in rules.user) {

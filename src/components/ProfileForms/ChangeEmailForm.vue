@@ -1,7 +1,7 @@
 <script>
 import {mapGetters} from "vuex";
 import useVuelidate from "@vuelidate/core";
-import {required, email} from "@vuelidate/validators";
+import {required, email, helpers} from "@vuelidate/validators";
 import BaseButton from "@/ui/BaseButton.vue";
 import BaseInput from "@/ui/BaseInput.vue";
 
@@ -88,14 +88,21 @@ export default {
     if (this.tokenSent) {
       return {
         user_data: {
-          confirmation_token: {required},
+          confirmation_token: {
+            required: helpers.withMessage(() => this.$t("error__field_is_required"), required)
+          },
         }
       }
     } else {
       return {
         user_data: {
-          new_email: {required, email},
-          password: {required},
+          new_email: {
+            required: helpers.withMessage(() => this.$t("error__field_is_required"), required),
+            email: helpers.withMessage(() => this.$t("error__invalid_email_format"), email)
+          },
+          password: {
+            required: helpers.withMessage(() => this.$t("error__field_is_required"), required)
+          },
         },
       }
     }

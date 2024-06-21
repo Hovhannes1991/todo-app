@@ -34,6 +34,7 @@
   "old_password": "Հին գաղտնաբառ",
   "new_password": "Նոր գաղտնաբառ",
   "confirm_new_password": "Հաստատեք նոր գաղտնաբառը",
+  "change_password": "Փոխել գաղտնաբառը",
   "country": "Երկիր",
   "city": "Քաղաք",
   "address": "Հասցե",
@@ -41,6 +42,7 @@
   "title": "Վերնագիր",
   "todo_add_success": "Թուդուն հաջողությամբ ավելացված է",
   "todo_title": "Թուդուի վերնագիր",
+  "sort_by__date": "Ժամանակահատվածի",
   "are_you_sure_you_want_to_delete_item": "Վստա՞հ եք, որ ուզում եք ջնջել տարրը:",
   "your_search_didnt_match_any_results": "Ձեր որոնումը չհամապատասխանեց որևէ արդյունքի",
   "there_is_no_items": "Ոչինչ չի գտնվել",
@@ -56,5 +58,11 @@
   "verification_token_is_send_to_your_email": "Հաստատման գաղտնաբառը ուղարկվել է Ձեր էլ․ փոստին",
   "verification_token_is_sent_to_mail": "Հաստատման գաղտնաբառը ուղարկվել է փոստին",
   "check_spam_info": "Եթե չէք ստացել Էլ․ փոստը, ապա ստուգեք ևեր Էլ․ փոստի Spam բաժինը:",
-  "you_can_request_new_token_only_after": "Խնդրում ենք սպասել, եթե ցանկանում եք ստանալ նոր գաղտնաբառ"
+  "you_can_request_new_token_only_after": "Խնդրում ենք սպասել, եթե ցանկանում եք ստանալ նոր գաղտնաբառ",
+  "personal_information": "Անձնական տվյալներ",
+  "delete_account": "Ջնջել հաշիվը",
+  "error__field_is_required": "Դաշտը պարտադիր է լրացնել",
+  "error__invalid_email_format": "Էլփոստի ձևաչափը անվավեր է",
+  "error__passwords_min_length": "Գաղտնաբառի երկարությունը պետք է լինի առնվազն 8 նիշ",
+  "error__passwords_same_as": "Գաղտնաբառերը չեն համընկնում"
 }

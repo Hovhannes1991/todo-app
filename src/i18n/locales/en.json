@@ -34,6 +34,7 @@
   "old_password": "Old Password",
   "new_password": "New Password",
   "confirm_new_password": "Confirm New Password",
+  "change_password": "Change Password",
   "country": "Country",
   "city": "City",
   "address": "Address",
@@ -41,6 +42,7 @@
   "title": "Title",
   "todo_add_success": "Todo added successfully",
   "todo_title": "Todo title",
+  "sort_by__date": "Date",
   "are_you_sure_you_want_to_delete_item": "Are You sure you want to delete item?",
   "your_search_didnt_match_any_results": "Your search didn't match any results",
   "there_is_no_items": "There is no items",
@@ -56,5 +58,11 @@
   "verification_token_is_send_to_your_email": "Verification token is sent to your E-mail",
   "verification_token_is_sent_to_mail": "Verification token is sent to mail",
   "check_spam_info": "If you don't see Email in your inbox please check spam folder.",
-  "you_can_request_new_token_only_after": "You can request new token only after"
+  "you_can_request_new_token_only_after": "You can request new token only after",
+  "personal_information": "Personal Information",
+  "delete_account": "Delete Account",
+  "error__field_is_required": "Field is required",
+  "error__invalid_email_format": "Invalid email format",
+  "error__passwords_min_length": "Password length must be at least __var__min_length__var__ symbols",
+  "error__passwords_same_as": "Passwords don't match"
 }

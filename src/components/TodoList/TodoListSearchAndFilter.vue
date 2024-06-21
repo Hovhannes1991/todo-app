@@ -52,7 +52,7 @@ export default {
 
     <div class="sort-and-filters">
       <TodoListSort :order-by="orderBy"
-                    sort-by-key="date"
+                    :sort-by-key="$t('sort_by__date')"
                     @on-order-change="changeOrder"/>
       <FilterBy :options="this.filter_options"
                 :filters="filters"

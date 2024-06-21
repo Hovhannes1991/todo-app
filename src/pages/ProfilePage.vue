@@ -25,10 +25,10 @@ export default {
   data() {
     return {
       tabs: [
-        {name: "personal_information", label: "Personal Information"},
-        {name: "change_email", label: "Change E-mail"},
-        {name: "change_password", label: "Change Password"},
-        {name: "delete_account", label: "Delete Account"}
+        {name: "personal_information", label: "personal_information"},
+        {name: "change_email", label: "change_email"},
+        {name: "change_password", label: "change_password"},
+        {name: "delete_account", label: "delete_account"}
       ],
       active_tab: "personal_information",
 
@@ -139,7 +139,7 @@ export default {
       <div v-for="tab in tabs"
            @click="changeTab(tab.name)"
            :class="{tab: true, 'active-tab': tab.name === active_tab}"
-           :key="tab">{{ tab.label }}
+           :key="tab">{{ $t(tab.label) }}
       </div>
     </div>
 

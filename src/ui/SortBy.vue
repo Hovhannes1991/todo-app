@@ -30,7 +30,9 @@ export default {
 
 <template>
 <div class="sort-by" @click="$emit('onOrderChange')">
-  <span>{{ $t('sorted_by') }} {{ sortByKey }}</span>
+  <span class="ht__text-ellipsis sort-by__label" :title="$t('sorted_by') + ' ' + sortByKey">
+    {{ $t('sorted_by') }} {{ sortByKey }}
+  </span>
   <span :class="iconClass">
     <font-awesome-icon icon="arrow-up-short-wide"/>
   </span>
@@ -45,6 +47,10 @@ export default {
   gap: 0.8rem;
   font-size: 1.5rem;
   cursor: pointer;
+
+  .sort-by__label {
+    max-width: 130px;
+  }
 
   .sort-by__icon {
     transition: transform 0.3s ease-in-out;

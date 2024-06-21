@@ -20,22 +20,22 @@ export default {
       show_mobile_menu: false,
       user_menu_items: [
         {
-          label: this.$t("home"),
+          label: "home",
           to: "home",
           icon: 'pi pi-home',
         },
         {
-          label: this.$t("profile"),
+          label: "profile",
           to: "profile",
           icon: 'pi pi-home'
         },
         {
-          label: this.$t("settings"),
+          label: "settings",
           to: "settings",
           icon: 'pi pi-star'
         },
         {
-          label: this.$t("logout"),
+          label: "logout",
           to: null,
           icon: 'pi pi-search',
           handler: "logoutHandler",
@@ -84,11 +84,10 @@ export default {
           <div class="dropdown">
             <ul>
               <li v-for="item in user_menu_items">
-                <button v-if="item.is_button" @click="menuItemClickHandler(item.handler)" type="button">{{
-                    item.label
-                  }}
+                <button v-if="item.is_button" @click="menuItemClickHandler(item.handler)" type="button">
+                  {{ $t(item.label) }}
                 </button>
-                <RouterLink v-else :to="item.to">{{ item.label }}</RouterLink>
+                <RouterLink v-else :to="item.to">{{ $t(item.label) }}</RouterLink>
               </li>
             </ul>
           </div>
@@ -99,11 +98,10 @@ export default {
         </div>
         <ul :class="{'user-menu__mobile': true, 'opened': show_mobile_menu}">
           <li @click="toggleMenu" v-for="item in user_menu_items">
-            <button v-if="item.is_button" @click="menuItemClickHandler(item.handler)" type="button">{{
-                item.label
-              }}
+            <button v-if="item.is_button" @click="menuItemClickHandler(item.handler)" type="button">
+              {{ $t(item.label) }}
             </button>
-            <RouterLink v-else :to="item.to">{{ item.label }}</RouterLink>
+            <RouterLink v-else :to="item.to">{{ $t(item.label) }}</RouterLink>
           </li>
         </ul>
       </template>

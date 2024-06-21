@@ -74,7 +74,7 @@ export default {
         </span>
     </template>
     <template #option="slotProps">
-      <div class="flex align-items-center">
+      <div class="flex align-items-center mr-5">
         <img :alt="slotProps.option.label" src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
              :class="`mr-2 flag flag-${this.flags[slotProps.option.code]}`" style="width: 18px"/>
         <div>{{ slotProps.option.name }}</div>
