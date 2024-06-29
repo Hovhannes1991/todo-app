@@ -66,17 +66,15 @@ export default {
             class="w-auto h-3rem bg-transparent border-none outline-none appearance-none">
     <template #value="slotProps">
       <div v-if="slotProps.value" class="flex align-items-center">
-        <img :alt="slotProps.value.label" src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
-             :class="`mr-2 flag flag-${this.flags[slotProps.value.code]}`" style="width: 30px"/>
+        <div :class="`country-flag flag-${this.flags[slotProps.value.code]}`"/>
       </div>
       <span v-else>
             {{ slotProps.placeholder }}
         </span>
     </template>
     <template #option="slotProps">
-      <div class="flex align-items-center mr-5">
-        <img :alt="slotProps.option.label" src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
-             :class="`mr-2 flag flag-${this.flags[slotProps.option.code]}`" style="width: 18px"/>
+      <div class="dropdown-country-flag__wrapper">
+        <div :class="`dropdown-country-flag flag-${this.flags[slotProps.option.code]}`"/>
         <div>{{ slotProps.option.name }}</div>
       </div>
     </template>
@@ -84,5 +82,24 @@ export default {
 </template>
 
 <style scoped lang="scss">
+.country-flag,
+.dropdown-country-flag__wrapper .dropdown-country-flag {
+  width: 30px;
+  height: 20px;
+  background-image: url("/images/flags_responsive.png");
+  background-size: 100%;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
 
+.dropdown-country-flag__wrapper {
+  display: flex;
+  align-items: center;
+  margin-right: 2rem;
+
+  .dropdown-country-flag {
+    width: 18px;
+    height: 12px;
+  }
+}
 </style>
