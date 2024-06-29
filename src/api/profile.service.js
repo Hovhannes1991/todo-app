@@ -16,3 +16,11 @@ export const changeEmailConfirm = async (token) => {
 export const changePassword = async (old_password, new_password) => {
     return httpService.post("/profile/change-password", {old_password, new_password});
 }
+
+export const deleteProfile = async () => {
+    return httpService.delete("/profile/delete-profile");
+}
+
+export const restoreProfile = async () => {
+    return httpService.post("/profile/restore-profile");
+}

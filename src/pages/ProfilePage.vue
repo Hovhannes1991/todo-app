@@ -3,16 +3,18 @@ import {mapGetters, mapMutations} from "vuex";
 import Dropdown from 'primevue/dropdown';
 import BaseInput from "@/ui/BaseInput.vue";
 import BaseButton from "@/ui/BaseButton.vue";
-import {updateProfile, changeEmail, changeEmailConfirm, changePassword} from "@/api/profile.service.js";
+import {updateProfile, changeEmail, changeEmailConfirm, changePassword, deleteProfile} from "@/api/profile.service.js";
 import {toastError, toastSuccess} from "@/services/toast.service.js";
 import BaseSelect from "@/ui/BaseSelect.vue";
 import UpdatePersonalInfoForm from "@/components/ProfileForms/UpdatePersonalInfoForm.vue";
 import ChangeEmailForm from "@/components/ProfileForms/ChangeEmailForm.vue";
 import ChangePasswordForm from "@/components/ProfileForms/ChangePasswordForm.vue";
+import DeleteProfileForm from "@/components/ProfileForms/DeleteProfileForm.vue";
 
 export default {
   name: "ProfilePage",
   components: {
+    DeleteProfileForm,
     ChangePasswordForm,
     UpdatePersonalInfoForm,
     ChangeEmailForm,
@@ -129,6 +131,23 @@ export default {
       }
       this.loading = false;
     },
+
+    async onDeleteProfile() {
+      try {
+        this.loading = true;
+        const {data} = await deleteProfile();
+        const updated_data = {
+          is_deleted: data.is_deleted,
+          deletedAt: data.deletedAt,
+          activeUntil: data.activeUntil
+        }
+        this.updateUserProperty(updated_data);
+      } catch (err) {
+        console.log(err);
+        toastError(this.$t('default_error_message'));
+      }
+      this.loading = false;
+    }
   }
 }
 </script>
@@ -172,6 +191,10 @@ export default {
               @remove-backend-error="removeBackendError"
               :backend-errors="backend_errors"
               :loading="loading"/>
+        </div>
+
+        <div v-show="active_tab === 'delete_account'">
+          <DeleteProfileForm @delete-profile="onDeleteProfile" :loading="loading"/>
         </div>
       </template>
     </div>

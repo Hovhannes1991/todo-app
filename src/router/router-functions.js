@@ -1,5 +1,7 @@
 import {checkAuthMiddleware} from "@/middlewares/check-auth.async.middleware.js";
 import {authMiddleware} from "@/middlewares/auth.middleware.js";
+import {activeUserMiddleware} from "@/middlewares/active-user.middleware.js";
+import {inactiveUserMiddleware} from "@/middlewares/inactive-user.middleware.js";
 import {emailVerificationMiddleware} from "@/middlewares/email-verification.middleware.js";
 import {guestMiddleware} from "@/middlewares/guest.middleware.js";
 import {setGetPageFlushMessage} from "@/helpers/storage.js";
@@ -10,6 +12,8 @@ const global_middlewares = [checkAuthMiddleware];
 const middlewares = {
     auth: authMiddleware,
     guest: guestMiddleware,
+    activeUser: activeUserMiddleware,
+    inactiveUser: inactiveUserMiddleware,
     emailVerification: emailVerificationMiddleware
 }
 export const beforeEach = ((to, from, next) => {
