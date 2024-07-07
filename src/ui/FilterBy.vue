@@ -43,6 +43,10 @@ export default {
       this.open = !this.open;
     },
 
+    hideFilter() {
+      this.open = false;
+    },
+
     onChange() {
       //set filters like { status: [] }
       const filters = {}
@@ -59,7 +63,6 @@ export default {
         }
       }
       this.$emit("onChange", filters);
-      this.open = false;
     }
   }
 }
@@ -71,6 +74,7 @@ export default {
 
     <div v-show="open" class="filter-menu w-20rem">
       <MultiSelect v-model="value"
+                   @hide="hideFilter"
                    :options="options"
                    @change="onChange"
                    optionValue="value"
