@@ -34,9 +34,9 @@ npm run build
 
 ### Live Demo
 
-[https://todo-list-manager-app.vercel.app](https://todo-list-manager-app.vercel.app)
+[todo-hk.vercel.app](https://todo-hk.vercel.app)
 
 
 ### Github URL
 
-[https://github.com/Hovhannes1991/todo-app](https://github.com/Hovhannes1991/todo-app)
+[github.com/Hovhannes1991/todo-app](https://github.com/Hovhannes1991/todo-app)
