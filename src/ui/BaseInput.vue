@@ -49,7 +49,7 @@ export default {
     },
     iconStyles: {
       type: Object,
-      default: () => {}
+      default: () => ({})
     },
     error: {
       type: String,
@@ -115,7 +115,7 @@ export default {
 <template>
   <label class="base-input-label">
     <span v-if="label">{{ label }}</span>
-    <div class="input-container">
+    <span class="input-container">
       <input
           @input="onInput($event.target.value)"
           ref="inputRef"
@@ -135,7 +135,7 @@ export default {
                        :style="iconStyles"
                        :spin="spinIcon"
                        :class="{'hk__cursor-pointer': icon_clickable}"/>
-    </div>
+    </span>
     <span v-if="error" class="error-message">{{ error }}</span>
   </label>
 </template>
