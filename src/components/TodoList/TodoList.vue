@@ -25,16 +25,16 @@ export default {
   data() {
     return {
       search: "",
-      order_by: "asc",
+      ordeerBy: "asc",
       filters: {
         status: []
       },
 
       loading: false,
-      add_todo_loading: false,
-      updating_todo: false,
+      addTodoLoading: false,
+      updatingTodo: false,
 
-      deleting_id: null
+      deletingId: null
     }
   },
 
@@ -49,8 +49,8 @@ export default {
       let todos = [...this.todos];
 
       //Search text
-      const search_text = this.search.trim().toLowerCase();
-      if (this.search) todos = this.searchInTodos(todos, search_text);
+      const searchText = this.search.trim().toLowerCase();
+      if (this.search) todos = this.searchInTodos(todos, searchText);
 
       //Filter By Status
       if (this.hasFilterByStatus) {
@@ -85,58 +85,58 @@ export default {
 
     async onAddTodo(todo) {
       try {
-        this.add_todo_loading = true;
+        this.addTodoLoading = true;
         const {data} = await addTodo(todo);
         toastSuccess(this.$t("todo_add_success"));
-        this.addTodo({todo: data.new_todo});
+        this.addTodo({todo: data.newTodo});
       } catch (err) {
         toastError(this.$t('default_error_message'));
       }
-      this.add_todo_loading = false;
+      this.addTodoLoading = false;
     },
 
     async onConfirmDeleteTodo() {
-      const id = this.deleting_id;
+      const id = this.deletingId;
       try {
-        this.updateTodo({id, updated_props: {disabled: true}});
+        this.updateTodo({id, updatedProps: {disabled: true}});
         const {data} = await deleteTodo(id);
         this.deleteTodo({id});
         toastSuccess(data.message);
       } catch (err) {
         console.log(err)
       }
-      this.deleting_id = null;
+      this.deletingId = null;
     },
 
     onCancelDelete() {
-      this.deleting_id = null;
+      this.deletingId = null;
     },
 
     openDeleteModal(id) {
-      this.deleting_id = id;
-      this.$refs.delete_modal.showModal();
+      this.deletingId = id;
+      this.$refs.deleteModalRef.showModal();
     },
 
     onStartEditTodo(todo) {
-      this.$refs.edit_todo_modal.openModal(todo);
+      this.$refs.editModalRef.openModal(todo);
     },
 
     async onSaveEdit(todo) {
       try {
-        this.updating_todo = true;
+        this.updatingTodo = true;
         const {data} = await editTodo(todo);
-        this.updateTodo({id: todo._id, updated_props: todo});
-        this.$refs.edit_todo_modal.closeModal();
+        this.updateTodo({id: todo._id, updatedProps: todo});
+        this.$refs.editModalRef.closeModal();
         toastSuccess(data.message);
       } catch (err) {
         console.log(err);
       }
-      this.updating_todo = false;
+      this.updatingTodo = false;
     },
 
     onCancelEdit() {
-      this.$refs.edit_todo_modal.closeModal();
-      this.updating_todo = false;
+      this.$refs.editModalRef.closeModal();
+      this.updatingTodo = false;
     },
 
     onSearchChange(value) {
@@ -148,31 +148,31 @@ export default {
     },
 
     onOrderByChange() {
-      this.order_by = this.order_by === "asc" ? "desc" : "asc";
+      this.ordeerBy = this.ordeerBy === "asc" ? "desc" : "asc";
     },
 
-    searchInTodos(todo_list, search_text) {
-      return todo_list.filter(todo => todo.title.trim().toLowerCase().startsWith(search_text));
+    searchInTodos(todoList, searchText) {
+      return todoList.filter(todo => todo.title.trim().toLowerCase().startsWith(searchText));
     },
 
-    filterByStatus(todo_list) {
+    filterByStatus(todoList) {
       const status = this.filters.status[0];
-      todo_list = todo_list.filter(item => {
-        if (item.just_updated) return true; //keep animation for just toggled items
+      todoList = todoList.filter(item => {
+        if (item.justUpdated) return true; //keep animation for just toggled items
 
         if (status === "completed") return item.completed;
         else if (status === "pending") return !item.completed;
 
         return true;
       })
-      return todo_list;
+      return todoList;
     },
 
-    orderBy(todo_list) {
-      if (this.order_by === "asc") {
-        return todo_list.toSorted((a, b) => a.updatedAt.localeCompare(b.updatedAt));
+    orderBy(todoList) {
+      if (this.ordeerBy === "asc") {
+        return todoList.toSorted((a, b) => a.updatedAt.localeCompare(b.updatedAt));
       } else {
-        return todo_list.toSorted((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+        return todoList.toSorted((a, b) => b.updatedAt.localeCompare(a.updatedAt));
       }
     }
   }
@@ -182,12 +182,12 @@ export default {
 <template>
   <main class="todo-list-component">
     <div class="todo-list-container">
-      <TodoListSearchAndFilter :order-by="order_by"
+      <TodoListSearchAndFilter :order-by="ordeerBy"
                                :filters="filters"
                                @search-change="onSearchChange"
                                @filter-change="onFilterChange"
                                @order-change="onOrderByChange"/>
-      <TodoListNewItem @add-todo="onAddTodo" :loading="add_todo_loading"/>
+      <TodoListNewItem @add-todo="onAddTodo" :loading="addTodoLoading"/>
       <div class="todo-list">
         <SkeletonListLoader v-if="loading" :items-count="10" :item-styles="{height: '3rem', marginBlock: '1.5rem' }"/>
         <template v-if="!loading">
@@ -201,11 +201,11 @@ export default {
         </template>
       </div>
 
-      <TodoListItemEdit ref="edit_todo_modal"
+      <TodoListItemEdit ref="editModalRef"
                         @cancel-editing="onCancelEdit"
                         @save-todo="onSaveEdit"
-                        :updating="updating_todo"/>
-      <DeleteModal ref="delete_modal"
+                        :updating="updatingTodo"/>
+      <DeleteModal ref="deleteModalRef"
                    @onCancel="onCancelDelete"
                    @onConfirm="onConfirmDeleteTodo"
                    :message="$t('are_you_sure_you_want_to_delete_item')"/>

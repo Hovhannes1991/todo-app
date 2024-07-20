@@ -25,29 +25,29 @@ export default {
 
   data() {
     return {
-      user_data: {
-        old_password: "",
-        new_password: "",
-        confirm_new_password: ""
+      userData: {
+        oldPassword: "",
+        newPassword: "",
+        confirmNewPassword: ""
       }
     }
   },
 
   computed: {
     errorMessages() {
-      const error_messages = {}
-      for (let key in this.user_data) {
-        error_messages[key] = this.v$.user_data[key]?.$errors?.[0]?.$message || this.backendErrors[key];
+      const errorMessages = {}
+      for (let key in this.userData) {
+        errorMessages[key] = this.v$.userData[key]?.$errors?.[0]?.$message || this.backendErrors[key];
       }
-      return error_messages;
+      return errorMessages;
     },
   },
 
   methods: {
     changePassword() {
       if (!this.formIsValid()) return;
-      const {old_password, new_password} = this.user_data
-      this.$emit("changePassword", old_password, new_password);
+      const {oldPassword, newPassword} = this.userData
+      this.$emit("changePassword", oldPassword, newPassword);
     },
 
     removeBackendError(name) {
@@ -63,19 +63,19 @@ export default {
   //vuelidate
   validations() {
     return {
-      user_data: {
-        old_password: {
+      userData: {
+        oldPassword: {
           required: helpers.withMessage(() => this.$t("error__field_is_required"), required)
         },
-        new_password: {
+        newPassword: {
           required: helpers.withMessage(() => this.$t("error__field_is_required"), required),
           minLength: helpers.withMessage(({$params}) => {
             return this.$t("error__passwords_min_length").replace("__var__min_length__var__", $params.min);
           }, minLength(8))
         },
-        confirm_new_password: {
+        confirmNewPassword: {
           required: helpers.withMessage(() => this.$t("error__field_is_required"), required),
-          sameAs: helpers.withMessage(() => this.$t("error__passwords_same_as"), sameAs(this.user_data.new_password))
+          sameAs: helpers.withMessage(() => this.$t("error__passwords_same_as"), sameAs(this.userData.newPassword))
         }
       }
     }
@@ -89,23 +89,23 @@ export default {
 
 <template>
   <form @submit.prevent="changePassword" autocomplete="on">
-    <BaseInput v-model="user_data.old_password"
+    <BaseInput v-model="userData.oldPassword"
                type="password"
                :label="$t('old_password')"
-               :error="errorMessages.old_password"
-               @input="removeBackendError('old_password')"
+               :error="errorMessages.oldPassword"
+               @input="removeBackendError('oldPassword')"
                name="password"/>
-    <BaseInput v-model="user_data.new_password"
+    <BaseInput v-model="userData.newPassword"
                type="password"
                :label="$t('new_password')"
-               :error="errorMessages.new_password"
-               @input="removeBackendError('new_password')"
+               :error="errorMessages.newPassword"
+               @input="removeBackendError('newPassword')"
                name="new_password"/>
-    <BaseInput v-model="user_data.confirm_new_password"
+    <BaseInput v-model="userData.confirmNewPassword"
                type="password"
                :label="$t('confirm_new_password')"
-               :error="errorMessages.confirm_new_password"
-               @input="removeBackendError('confirm_new_password')"
+               :error="errorMessages.confirmNewPassword"
+               @input="removeBackendError('confirmNewPassword')"
                name="confirm_new_password"/>
 
 

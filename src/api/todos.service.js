@@ -1,7 +1,7 @@
 import {httpService} from "@/services/http/http-service.js";
 
-export const getUserTodos = (user_id) => {
-    return httpService.get("/todo/get-all?user_id=" + user_id);
+export const getUserTodos = (userId) => {
+    return httpService.get("/todo/get-all?user_id=" + userId);
 }
 export const toggleTodo = (id) => {
     return httpService.post("/todo/toggle", {id});

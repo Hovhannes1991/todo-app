@@ -7,7 +7,7 @@ import {guestMiddleware} from "@/middlewares/guest.middleware.js";
 import {setGetPageFlushMessage} from "@/helpers/storage.js";
 import {toastService} from "@/services/toast.service.js";
 
-const global_middlewares = [checkAuthMiddleware];
+const GLOBAL_MIDDLEWARES = [checkAuthMiddleware];
 
 const middlewares = {
     auth: authMiddleware,
@@ -18,11 +18,11 @@ const middlewares = {
 }
 export const beforeEach = ((to, from, next) => {
     if (to.meta.middleware) {
-        const route_middlewares = to.meta.middleware.map(m => middlewares[m]);
-        const all_middlewares = [...global_middlewares, ...route_middlewares];
-        runMiddlewares(all_middlewares, to, from, next);
+        const routeMiddlewares = to.meta.middleware.map(m => middlewares[m]);
+        const allMiddlewares = [...GLOBAL_MIDDLEWARES, ...routeMiddlewares];
+        runMiddlewares(allMiddlewares, to, from, next);
     } else {
-        runMiddlewares(global_middlewares, to, from, next);
+        runMiddlewares(GLOBAL_MIDDLEWARES, to, from, next);
     }
 });
 

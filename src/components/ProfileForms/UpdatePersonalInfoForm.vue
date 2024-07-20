@@ -27,7 +27,7 @@ export default {
   created() {
     for (let key in this.user) {
       const value = this.user[key] && typeof this.user[key] === "object" ? {...this.user[key]} : this.user[key];
-      this.user_data[key] = value || "";
+      this.userData[key] = value || "";
     }
 
     if (!this.countries?.length) {
@@ -37,13 +37,13 @@ export default {
 
   data() {
     return {
-      user_data: {
+      userData: {
         firstname: "",
         lastname: "",
         country: "",
         city: "",
         address: "",
-        postal_code: "",
+        postalCode: "",
       }
     }
   },
@@ -52,22 +52,22 @@ export default {
     ...mapGetters({user: "auth/user", countries: "countries/countries"}),
 
     cities() {
-      if (!this.countries?.length || !this.user_data.country) return [];
-      const country = this.countries.find(country => country.iso3 === this.user_data.country);
+      if (!this.countries?.length || !this.userData.country) return [];
+      const country = this.countries.find(country => country.iso3 === this.userData.country);
       return country?.cities || []
     },
 
     errorMessages() {
-      const error_messages = {}
-      for (let key in this.user_data) {
-        error_messages[key] = this.v$.user_data[key]?.$errors?.[0]?.$message || this.backendErrors[key];
+      const errorMessages = {}
+      for (let key in this.userData) {
+        errorMessages[key] = this.v$.userData[key]?.$errors?.[0]?.$message || this.backendErrors[key];
       }
-      return error_messages;
+      return errorMessages;
     },
 
     hasChanges() {
-      const props = ["firstname", "lastname", "country", "city", "address", "postal_code"];
-      return props.some(prop => this.user[prop] !== this.user_data[prop]);
+      const props = ["firstname", "lastname", "country", "city", "address", "postalCode"];
+      return props.some(prop => this.user[prop] !== this.userData[prop]);
     }
   },
 
@@ -76,7 +76,7 @@ export default {
     onSubmitPersonalData() {
       if (!this.formIsValid()) return;
 
-      this.$emit("submitPersonalData", this.user_data);
+      this.$emit("submitPersonalData", this.userData);
     },
 
     removeBackendError(name) {
@@ -88,16 +88,16 @@ export default {
       return !this.v$.$error;
     },
 
-    onDropdownChange(value, property_name) {
-      this.user_data[property_name] = value;
-      this.$emit("removeBackendError", property_name);
+    onDropdownChange(value, property) {
+      this.userData[property] = value;
+      this.$emit("removeBackendError", property);
     },
   },
 
   //vuelidate
   validations() {
     return {
-      user_data: {
+      userData: {
         firstname: {
           required: helpers.withMessage(() => this.$t("error__field_is_required"), required)
         },
@@ -116,19 +116,19 @@ export default {
 
 <template>
   <form @submit.prevent="onSubmitPersonalData" autocomplete="on">
-    <BaseInput v-model="user_data.firstname"
+    <BaseInput v-model="userData.firstname"
                :error="errorMessages.firstname"
                @input="removeBackendError('firstname')"
                name="firstname"
                :placeholder="$t('first_name')"/>
-    <BaseInput v-model="user_data.lastname"
+    <BaseInput v-model="userData.lastname"
                :error="errorMessages.lastname"
                @input="removeBackendError('lastname')"
                name="lastname"
                :placeholder="$t('last_name')"/>
     <BaseSelect :options="countries"
                 @on-change="onDropdownChange($event, 'country')"
-                :value="user_data.country"
+                :value="userData.country"
                 :error-message="errorMessages.country"
                 option-label="country"
                 option-value="iso3"
@@ -139,21 +139,21 @@ export default {
 
     <BaseSelect :options="cities"
                 @on-change="onDropdownChange($event, 'city')"
-                :value="user_data.city"
+                :value="userData.city"
                 :error-message="errorMessages.city"
                 name="city"
                 :placeholder="$t('city')"
-                :disabled="!cities?.length || !this.user_data.country"/>
+                :disabled="!cities?.length || !this.userData.country"/>
 
-    <BaseInput v-model="user_data.address"
+    <BaseInput v-model="userData.address"
                :error="errorMessages.address"
                @input="removeBackendError('address')"
                name="address"
                :placeholder="$t('address')"/>
-    <BaseInput v-model="user_data.postal_code"
-               :error="errorMessages.postal_code"
-               @input="removeBackendError('postal_code')"
-               name="postal_code"
+    <BaseInput v-model="userData.postalCode"
+               :error="errorMessages.postalCode"
+               @input="removeBackendError('postalCode')"
+               name="postalCode"
                :placeholder="$t('postal_code')"/>
 
 

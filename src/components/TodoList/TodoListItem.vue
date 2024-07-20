@@ -18,7 +18,7 @@ export default {
 
   data() {
     return {
-      timeout_id: null
+      timeoutId: null
     }
   },
 
@@ -29,14 +29,14 @@ export default {
     async toggleCompleted(id, completed) {
       try {
         //optimistic update VUEX
-        this.updateTodo({id, updated_props: {completed, just_updated: true}});
-        this.timeout_id = setTimeout(() => {
-          this.updateTodo({id, updated_props: {just_updated: false}});
+        this.updateTodo({id, updatedProps: {completed, justUpdated: true}});
+        this.timeoutId = setTimeout(() => {
+          this.updateTodo({id, updatedProps: {justUpdated: false}});
         }, 700)
         await toggleTodo(id);
       } catch (err) {
         //revert optimistic update
-        this.updateTodo({id, updated_props: {completed: !completed, just_updated: false}});
+        this.updateTodo({id, updatedProps: {completed: !completed, justUpdated: false}});
         this.clearDispatchTimeout();
         console.log(err)
       }
@@ -51,7 +51,7 @@ export default {
     },
 
     clearDispatchTimeout() {
-      if (this.timeout_id) clearTimeout(this.timeout_id);
+      if (this.timeoutId) clearTimeout(this.timeoutId);
     }
   }
 }

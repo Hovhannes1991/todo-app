@@ -46,7 +46,7 @@ export default {
 
 <template>
   <div class="delete-profile-section">
-    <div v-if="user.is_deleted" class="restore-profile-info">
+    <div v-if="user.isDeleted" class="restore-profile-info">
       <div @click="logoutHandler" class="shape"></div>
       <p>{{ $t("after_delete_profile_info").replace("__var__date__var__", restoreDate) }}</p>
       <form @submit.prevent="logoutHandler">

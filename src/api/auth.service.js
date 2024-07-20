@@ -10,8 +10,8 @@ export const login = ({email, password}) => {
 }
 
 export const logout = () => {
-    const {access_token, refresh_token} = getTokens();
-    return httpService.post("/auth/logout", {access_token, refresh_token});
+    const {accessToken, refreshToken} = getTokens();
+    return httpService.post("/auth/logout", {accessToken, refreshToken});
 }
 
 export const getUserByToken = () => {

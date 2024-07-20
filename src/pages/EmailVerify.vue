@@ -14,10 +14,10 @@ export default {
     return {
       token: "",
       loading: false,
-      send_again_disabled: false,
-      send_again_interval_id: null,
-      send_again_countdown: null,
-      user_email: "",
+      sendAgainDisabled: false,
+      sendAgainIntervalId: null,
+      sendAgainCountDown: null,
+      userEmail: "",
       errors: {
         token: null
       }
@@ -28,17 +28,17 @@ export default {
     ...mapGetters({user: "auth/user", emailVerificationTokenIsSent: "helpers/emailVerificationTokenIsSent"}),
 
     formattedSendAgainCountdown() {
-      if (!this.send_again_countdown) return 0;
-      return secondsToHMS(this.send_again_countdown).mm_ss;
+      if (!this.sendAgainCountDown) return 0;
+      return secondsToHMS(this.sendAgainCountDown).mm_ss;
     }
   },
 
   created() {
-    if (this.user?.email_is_verified) {
+    if (this.user?.emailIsVerified) {
       this.$router.push({name: "home"});
     }
 
-    this.user_email = this.user?.email || "";
+    this.userEmail = this.user?.email || "";
     if (this.emailVerificationTokenIsSent) {
       this.startSendAgainCountdownInterval();
     }
@@ -64,12 +64,12 @@ export default {
       try {
         this.loading = true;
         await emailVerify(this.token);
-        this.updateUserProperty({email_is_verified: true});
+        this.updateUserProperty({emailIsVerified: true});
         this.$router.push({name: "home"});
       } catch (err) {
-        const token_error = err.response?.data?.errors?.token;
-        if (token_error) {
-          this.errors.token = token_error;
+        const tokenError = err.response?.data?.errors?.token;
+        if (tokenError) {
+          this.errors.token = tokenError;
         } else {
           toastError(this.$t('default_error_message'));
         }
@@ -78,16 +78,16 @@ export default {
     },
 
     async sendAgain() {
-      this.send_again_disabled = true;
+      this.sendAgainDisabled = true;
       try {
-        await resendToken(this.user_email);
+        await resendToken(this.userEmail);
         this.startSendAgainCountdownInterval();
         this.errors.token = null;
       } catch (err) {
-        this.send_again_disabled = false;
-        const token_error = err.response?.data?.token;
-        if (token_error) {
-          this.errors.token = token_error;
+        this.sendAgainDisabled = false;
+        const tokenError = err.response?.data?.token;
+        if (tokenError) {
+          this.errors.token = tokenError;
         } else {
           toastError(this.$t('default_error_message'));
         }
@@ -95,20 +95,20 @@ export default {
     },
 
     startSendAgainCountdownInterval() {
-      this.send_again_disabled = true;
-      this.send_again_countdown = 150;
+      this.sendAgainDisabled = true;
+      this.sendAgainCountDown = 150;
 
-      this.send_again_interval_id = setInterval(() => {
-        this.send_again_countdown--;
-        if (this.send_again_countdown === 0) {
+      this.sendAgainIntervalId = setInterval(() => {
+        this.sendAgainCountDown--;
+        if (this.sendAgainCountDown === 0) {
           this.clearSendAgainCountdownInterval();
-          this.send_again_disabled = false;
+          this.sendAgainDisabled = false;
         }
       }, 1000)
     },
 
     clearSendAgainCountdownInterval() {
-      if (this.send_again_interval_id) clearInterval(this.send_again_interval_id);
+      if (this.sendAgainIntervalId) clearInterval(this.sendAgainIntervalId);
     },
 
     removeTokenError() {
@@ -122,12 +122,12 @@ export default {
   <div class="email-verification">
     <h1 class="email-verification__title">{{ $t('please_verify_your_email')}}</h1>
     <p class="email-verification__message">{{ $t('verification_token_is_send_to_your_email') }}
-      <span class="user-email">{{ user_email }}</span>
+      <span class="user-email">{{ userEmail }}</span>
     </p>
     <p class="email-verification__span-warning">{{ $t('check_spam_info') }}</p>
     <form @submit.prevent="onSubmit">
       <BaseInput
-          v-model="user_email"
+          v-model="userEmail"
           :disabled="true"
           label="E-mail"
           type="text"/>
@@ -145,11 +145,11 @@ export default {
 
         <div class="send-again-btn">
           <BaseButton @click="sendAgain"
-                      :disabled="send_again_disabled"
+                      :disabled="sendAgainDisabled"
                       :label="$t('send_again')"
                       variant="link"
                       type="button"/>
-          <p v-if="send_again_countdown">
+          <p v-if="sendAgainCountDown">
             {{ $t('you_can_request_new_token_only_after') }} {{ formattedSendAgainCountdown }}
           </p>
         </div>

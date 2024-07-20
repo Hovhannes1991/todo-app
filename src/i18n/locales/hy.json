@@ -58,6 +58,7 @@
   "go_to_home_page": "Գնալ գլխավոր էջ",
   "please_verify_your_email": "Խնդրում ենք ստուգել Ձեր էլ․ փոստը",
   "verification_token_is_send_to_your_email": "Հաստատման գաղտնաբառը ուղարկվել է Ձեր էլ․ փոստին",
+  "token": "Կարճ գաղտնաբառ",
   "verification_token_is_sent_to_mail": "Հաստատման գաղտնաբառը ուղարկվել է փոստին",
   "check_spam_info": "Եթե չէք ստացել Էլ․ փոստը, ապա ստուգեք ևեր Էլ․ փոստի Spam բաժինը:",
   "you_can_request_new_token_only_after": "Խնդրում ենք սպասել, եթե ցանկանում եք ստանալ նոր գաղտնաբառ",

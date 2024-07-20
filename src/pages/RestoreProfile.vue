@@ -33,12 +33,12 @@ export default {
       try {
         this.loading = true;
         await restoreProfile();
-        const updated_data = {
-          is_deleted: false,
+        const updatedData = {
+          isDeleted: false,
           deletedAt: null,
           activeUntil: null
         }
-        this.updateUserProperty(updated_data);
+        this.updateUserProperty(updatedData);
         setGetPageFlushMessage(this.$t("your_profile_successfully_restored"));
         this.$router.push({name: "home"});
       } catch (err) {

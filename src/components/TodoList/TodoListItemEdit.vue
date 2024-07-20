@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       show: false,
-      original_title: "",
+      originalTitle: "",
       errors: {},
 
       todo: {}
@@ -27,25 +27,25 @@ export default {
 
   computed: {
     hasChanges() {
-      return this.original_title !== this.todo.title;
+      return this.originalTitle !== this.todo.title;
     },
 
     errorMessages() {
-      const error_messages = {}
+      const errorMessages = {}
       for (let key in this.errors) {
-        error_messages[key] = this.errors[key] ? this.$t(this.errors[key]) : null;
+        errorMessages[key] = this.errors[key] ? this.$t(this.errors[key]) : null;
       }
-      return error_messages;
+      return errorMessages;
     }
   },
 
   methods: {
     async openModal(todo) {
       this.todo = {...todo};
-      this.original_title = todo.title;
+      this.originalTitle = todo.title;
       this.show = true;
       await this.$nextTick();
-      this.$refs.title_ref.$refs.input_ref.focus();
+      this.$refs.titleRef.$refs.inputRef.focus();
     },
 
     closeModal() {
@@ -75,9 +75,9 @@ export default {
 
 <template>
   <div v-if="show" class="edit-modal" @keydown.esc="cancel">
-    <p class="modal-info">{{ $t('title') }}: <span><b>{{ original_title }}</b></span></p>
+    <p class="modal-info">{{ $t('title') }}: <span><b>{{ originalTitle }}</b></span></p>
     <BaseInput
-        ref="title_ref"
+        ref="titleRef"
         v-model="todo.title"
         @input="removeErrors('title')"
         @keydown.enter="saveTodo"

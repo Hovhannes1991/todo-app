@@ -16,7 +16,7 @@ export default {
 
   data() {
     return {
-      new_todo: "",
+      newTodo: "",
 
       color: "#039BE5"
     }
@@ -24,9 +24,9 @@ export default {
 
   methods: {
     addTodo() {
-      if (this.loading || !this.new_todo?.trim()) return;
-      this.$emit("addTodo", this.new_todo);
-      this.new_todo = "";
+      if (this.loading || !this.newTodo?.trim()) return;
+      this.$emit("addTodo", this.newTodo);
+      this.newTodo = "";
     }
   }
 }
@@ -34,7 +34,7 @@ export default {
 
 <template>
   <div class="todo-list-new-item">
-    <BaseInput v-model="new_todo"
+    <BaseInput v-model="newTodo"
                @on-icon-click="addTodo"
                @keydown.enter="addTodo"
                variant="underlined"

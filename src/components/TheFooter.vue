@@ -7,7 +7,7 @@ export default {
 
   data() {
     return {
-      current_year: new Date().getFullYear(),
+      currentYear: new Date().getFullYear(),
 
       social: [
         {
@@ -50,7 +50,7 @@ export default {
     </div>
 
     <div class="footer-row footer-row-2">
-      <span>&copy; {{ current_year }}</span>
+      <span>&copy; {{ currentYear }}</span>
     </div>
   </footer>
 </template>

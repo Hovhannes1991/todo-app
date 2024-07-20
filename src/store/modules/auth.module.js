@@ -3,7 +3,7 @@ import * as types from '../mutation-types';
 import {getTokens, clearTokens, saveUserData, clearUserData, setGetPageFlushMessage} from "@/helpers/storage.js";
 import {getUserByToken, logout} from "@/api/auth.service.js";
 
-export const user_store = {
+export const userStore = {
     namespaced: true,
 
     state: () => ({
@@ -26,8 +26,8 @@ export const user_store = {
 
     actions: {
         async checkAuth(context) {
-            const {access_token} = getTokens();
-            if (context.getters.user || !access_token) return;
+            const {accessToken} = getTokens();
+            if (context.getters.user || !accessToken) return;
 
             try {
                 context.commit("helpers/" + types.TOGGLE_FULL_PAGE_LOADER, true, {root: true});

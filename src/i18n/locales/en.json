@@ -58,6 +58,7 @@
   "go_to_home_page": "Go to Home page",
   "please_verify_your_email": "Please verify your E-mail",
   "verification_token_is_send_to_your_email": "Verification token is sent to your E-mail",
+  "token": "Token",
   "verification_token_is_sent_to_mail": "Verification token is sent to mail",
   "check_spam_info": "If you don't see Email in your inbox please check spam folder.",
   "you_can_request_new_token_only_after": "You can request new token only after",

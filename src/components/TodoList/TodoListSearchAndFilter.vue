@@ -15,9 +15,9 @@ export default {
   data() {
     return {
       search: "",
-      filter_options: filterOptions(),
+      filterOptions: filterOptions(),
 
-      search_icon_styles: {
+      searchIconStyles: {
         color: 'var(--app-black)'
       }
     }
@@ -48,13 +48,13 @@ export default {
                :placeholder="$t('search')"
                variant="underlined"
                main_color="black"
-               :icon-styles="search_icon_styles"/>
+               :icon-styles="searchIconStyles"/>
 
     <div class="sort-and-filters">
       <TodoListSort :order-by="orderBy"
                     :sort-by-key="$t('sort_by__date')"
                     @on-order-change="changeOrder"/>
-      <FilterBy :options="this.filter_options"
+      <FilterBy :options="this.filterOptions"
                 :filters="filters"
                 @on-change="onFilterChange"/>
     </div>

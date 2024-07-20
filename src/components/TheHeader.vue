@@ -17,8 +17,8 @@ export default {
 
   data() {
     return {
-      show_mobile_menu: false,
-      user_menu_items: [
+      showMobileMenu: false,
+      userMenuItems: [
         {
           label: "home",
           to: "home",
@@ -49,7 +49,7 @@ export default {
     ...mapActions({logout: "auth/logout"}),
 
     toggleMenu() {
-      this.show_mobile_menu = !this.show_mobile_menu;
+      this.showMobileMenu = !this.showMobileMenu;
     },
 
     async logoutHandler() {
@@ -83,7 +83,7 @@ export default {
           <button class="user-menu__btn">{{ $t('user_menu') }} &#9662;</button>
           <div class="dropdown">
             <ul>
-              <li v-for="item in user_menu_items">
+              <li v-for="item in userMenuItems">
                 <button v-if="item.is_button" @click="menuItemClickHandler(item.handler)" type="button">
                   {{ $t(item.label) }}
                 </button>
@@ -96,8 +96,8 @@ export default {
              @click="toggleMenu">
           <FontAwesomeIcon icon="bars"/>
         </div>
-        <ul :class="{'user-menu__mobile': true, 'opened': show_mobile_menu}">
-          <li @click="toggleMenu" v-for="item in user_menu_items">
+        <ul :class="{'user-menu__mobile': true, 'opened': showMobileMenu}">
+          <li @click="toggleMenu" v-for="item in userMenuItems">
             <button v-if="item.is_button" @click="menuItemClickHandler(item.handler)" type="button">
               {{ $t(item.label) }}
             </button>

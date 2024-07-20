@@ -8,19 +8,19 @@ export default {
   components: {Dropdown},
 
   created() {
-    const locale_code = getSelectedLocale() || "en";
-    const locale = this.locales.find(item => item.code === locale_code);
+    const localeCode = getSelectedLocale() || "en";
+    const locale = this.locales.find(item => item.code === localeCode);
     if (locale) {
-      this.selected_locale = locale;
-      this.selected_locale_code = locale_code;
-      if (locale_code !== DEFAULT_LOCALE) setI18nLanguage(locale_code);
+      this.selectedLocale = locale;
+      this.selectedLocaleCode = localeCode;
+      if (localeCode !== DEFAULT_LOCALE) setI18nLanguage(localeCode);
     }
   },
 
   data() {
     return {
-      selected_locale: "",
-      selected_locale_code: "",
+      selectedLocale: "",
+      selectedLocaleCode: "",
       locales: [
         {
           name: "English",
@@ -46,19 +46,19 @@ export default {
 
   methods: {
     onLocaleChange(e) {
-      const locale_code = e?.value?.code;
-      if (!locale_code || this.selected_locale_code === locale_code) return;
+      const localeCode = e?.value?.code;
+      if (!localeCode || this.selectedLocaleCode === localeCode) return;
 
-      this.selected_locale_code = locale_code;
-      setI18nLanguage(locale_code);
-      setSelectedLocale(locale_code);
+      this.selectedLocaleCode = localeCode;
+      setI18nLanguage(localeCode);
+      setSelectedLocale(localeCode);
     }
   }
 }
 </script>
 
 <template>
-  <Dropdown v-model="selected_locale"
+  <Dropdown v-model="selectedLocale"
             :options="locales"
             @change="onLocaleChange"
             optionLabel="name"

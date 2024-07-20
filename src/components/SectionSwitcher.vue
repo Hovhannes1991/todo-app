@@ -7,7 +7,7 @@ export default {
 
   props: {
     sections: Array,
-    selected_section: String,
+    selectedSection: String,
   },
 
   emits: ["selectSection"],
@@ -23,7 +23,7 @@ export default {
 <template>
   <div class="section-switcher">
     <BaseButton v-for="section in sections"
-                :variant="selected_section === section ? 'app-button' : 'secondary'"
+                :variant="selectedSection === section ? 'app-button' : 'secondary'"
                 @click="selectSection(section)"
                 :label="$t(section)"
                 :key="section"/>

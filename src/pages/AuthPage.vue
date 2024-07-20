@@ -1,33 +1,3 @@
-<template>
-  <div class="login-register-page">
-    <div class="form-container">
-      <SectionSwitcher
-          :sections="sections"
-          :selected_section="selected_section"
-          @select-section="changeSection"/>
-
-      <form @submit.prevent="onSubmit" autocomplete="on">
-        <div v-for="input in formInputs"
-             :class="{'form-item': true, 'form-item-hidden': !input.login_item && isLoginSection}">
-          <BaseInput
-              v-model="user[input.name]"
-              @input="removeBackendError(input.name)"
-              @on-icon-click="handleIconClick(input.onIconClick)"
-              :placeholder="input.placeholder"
-              :name="input.name"
-              :type="input.type"
-              :icon="input.icon"
-              :error="errorMessages[input.name]"
-              :tab-index="input.tab_index"
-              :key="input.name"/>
-        </div>
-
-        <BaseButton :label="submitButtonLabel" variant="app-button" type="submit" :loading="loading"/>
-      </form>
-    </div>
-  </div>
-</template>
-
 <script>
 import {mapMutations} from "vuex";
 import useVuelidate from "@vuelidate/core";
@@ -46,19 +16,19 @@ export default {
     return {
       loading: false,
       sections: ["login", "registration"],
-      selected_section: "login",
+      selectedSection: "login",
 
-      show_password: false,
+      showPassword: false,
 
       user: {
         firstname: "",
         lastname: "",
         email: "",
         password: "",
-        confirm_password: ""
+        confirmPassword: ""
       },
 
-      backend_errors: {}
+      backendErrors: {}
     }
   },
 
@@ -87,15 +57,15 @@ export default {
       rules.user.lastname = {
         required: helpers.withMessage(() => this.$t("error__field_is_required"), required)
       }
-      rules.user.confirm_password = {
+      rules.user.confirmPassword = {
         required: helpers.withMessage(() => this.$t("error__field_is_required"), required),
         sameAs: helpers.withMessage(() => this.$t("error__passwords_same_as"), sameAs(this.user.password))
       }
     }
 
     for (let key in rules.user) {
-      const message = () => this.backend_errors[key];
-      const backend = helpers.withMessage(message, () => !this.backend_errors[key]);
+      const message = () => this.backendErrors[key];
+      const backend = helpers.withMessage(message, () => !this.backendErrors[key]);
       rules.user[key] = {...rules.user[key], backend}
     }
     return rules;
@@ -107,12 +77,12 @@ export default {
 
   computed: {
     isLoginSection() {
-      return this.selected_section === "login";
+      return this.selectedSection === "login";
     },
 
     formInputs() {
-      const password_icon = this.show_password ? "eye" : "eye-slash";
-      const password_type = this.show_password ? "text" : "password";
+      const passwordIcon = this.showPassword ? "eye" : "eye-slash";
+      const passwordType = this.showPassword ? "text" : "password";
 
       return [
         {
@@ -120,36 +90,36 @@ export default {
           name: "firstname",
           type: "text",
           login_item: false,
-          tab_index: !this.isLoginSection ? "0" : "-1"
+          tabIndex: !this.isLoginSection ? "0" : "-1"
         },
         {
           placeholder: this.$t("last_name"),
           name: "lastname",
           type: "text",
           login_item: false,
-          tab_index: !this.isLoginSection ? "0" : "-1"
+          tabIndex: !this.isLoginSection ? "0" : "-1"
         },
         {
           placeholder: this.$t("email"),
           name: "email",
           type: "email",
           login_item: true,
-          tab_index: "0"},
+          tabIndex: "0"},
         {
           placeholder: this.$t("password"),
           name: "password",
-          type: password_type,
+          type: passwordType,
           login_item: true,
-          icon: password_icon,
+          icon: passwordIcon,
           onIconClick: this.showHidePassword,
-          tab_index: "0"
+          tabIndex: "0"
         },
         {
           placeholder: this.$t("confirm_password"),
-          name: "confirm_password",
-          type: password_type,
+          name: "confirmPassword",
+          type: passwordType,
           login_item: false,
-          tab_index: !this.isLoginSection ? "0" : "-1"
+          tabIndex: !this.isLoginSection ? "0" : "-1"
         }
       ]
     },
@@ -159,11 +129,11 @@ export default {
     },
 
     errorMessages() {
-      const error_messages = {}
+      const errorMessages = {}
       for (let key in this.user) {
-        error_messages[key] = this.v$.user[key]?.$errors?.[0]?.$message;
+        errorMessages[key] = this.v$.user[key]?.$errors?.[0]?.$message;
       }
-      return error_messages;
+      return errorMessages;
     }
   },
 
@@ -175,12 +145,12 @@ export default {
 
     setInitialSection() {
       const section = setGetAuthPageSection() || "login";
-      if (section !== "login") this.selected_section = section;
+      if (section !== "login") this.selectedSection = section;
     },
 
     changeSection(section) {
-      this.selected_section = section;
-      this.backend_errors = {}
+      this.selectedSection = section;
+      this.backendErrors = {}
       setGetAuthPageSection(section);
     },
 
@@ -193,7 +163,7 @@ export default {
     },
 
     showHidePassword() {
-      this.show_password = !this.show_password;
+      this.showPassword = !this.showPassword;
     },
 
     handleIconClick(fn) {
@@ -201,24 +171,25 @@ export default {
     },
 
     removeBackendError(name) {
-      this.backend_errors[name] = null;
-      if (name === "password") this.backend_errors.email = null;
+      this.backendErrors[name] = null;
+      if (name === "password") this.backendErrors.email = null;
     },
 
     handleBackendErrors(err) {
+      this.v$.$touch();
       const errors = err.response?.data?.errors;
       if (errors) {
         const obj = {}
         errors.forEach(({path, msg}) => obj[path] = msg);
-        this.backend_errors = obj;
+        this.backendErrors = obj;
       }
     },
 
     onAuthSuccess(data) {
       this.updateUser({user: data.user});
       saveTokens(data);
-      const redirect_route_name = data.user.email_is_verified ? "home" : "email-verify";
-      this.$router.push({name: redirect_route_name});
+      const redirectRouteName = data.user.emailIsVerified ? "home" : "email-verify";
+      this.$router.push({name: redirectRouteName});
     },
 
     async login() {
@@ -249,6 +220,36 @@ export default {
   }
 }
 </script>
+
+<template>
+  <div class="login-register-page">
+    <div class="form-container">
+      <SectionSwitcher
+          :sections="sections"
+          :selected-section="selectedSection"
+          @select-section="changeSection"/>
+
+      <form @submit.prevent="onSubmit" autocomplete="on">
+        <div v-for="input in formInputs"
+             :class="{'form-item': true, 'form-item-hidden': !input.login_item && isLoginSection}">
+          <BaseInput
+              v-model="user[input.name]"
+              @input="removeBackendError(input.name)"
+              @on-icon-click="handleIconClick(input.onIconClick)"
+              :placeholder="input.placeholder"
+              :name="input.name"
+              :type="input.type"
+              :icon="input.icon"
+              :error="errorMessages[input.name]"
+              :tab-index="input.tabIndex"
+              :key="input.name"/>
+        </div>
+
+        <BaseButton :label="submitButtonLabel" variant="app-button" type="submit" :loading="loading"/>
+      </form>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 .login-register-page {

@@ -17,8 +17,8 @@ export default {
     },
     variant: {
       validator(value) {
-        const button_variants = ["app-button", "primary", "secondary", "success", "warning", "danger", "link"];
-        return button_variants.includes(value);
+        const buttonVariants = ["app-button", "primary", "secondary", "success", "warning", "danger", "link"];
+        return buttonVariants.includes(value);
       },
       default: "primary"
     },

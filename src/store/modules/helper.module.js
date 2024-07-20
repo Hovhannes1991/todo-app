@@ -1,29 +1,29 @@
 import * as types from '../mutation-types';
 
-export const helpers_store = {
+export const helpersStore = {
     namespaced: true,
 
     state: () => {
         return {
-            show_full_page_loader: false,
+            showFullPageLoader: false,
 
-            email_verification_token_is_sent: false
+            emailVerificationTokenIsSent: false
         }
     },
 
     mutations: {
         [types.TOGGLE_FULL_PAGE_LOADER](state, payload) {
-            state.show_full_page_loader = payload;
+            state.showFullPageLoader = payload;
         },
 
         [types.SET_EMAIL_VERIFICATION_IS_SENT](state, payload) {
-            state.email_verification_token_is_sent = payload;
+            state.emailVerificationTokenIsSent = payload;
         }
     },
 
     getters: {
-        showFullPageLoader: state => state.show_full_page_loader,
+        showFullPageLoader: state => state.showFullPageLoader,
 
-        emailVerificationTokenIsSent: state => state.email_verification_token_is_sent
+        emailVerificationTokenIsSent: state => state.emailVerificationTokenIsSent
     },
 }

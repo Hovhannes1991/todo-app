@@ -38,10 +38,10 @@ const processQueue = (error, token = null) => {
 
 // Request interceptor
 axiosInstance.interceptors.request.use(request => {
-    const {access_token} = getTokens();
+    const {accessToken} = getTokens();
 
-    if (access_token) {
-        request.headers['Authorization'] = `Bearer ${access_token}`;
+    if (accessToken) {
+        request.headers['Authorization'] = `Bearer ${accessToken}`;
     }
 
     request.headers['Access-Control-Allow-Origin'] = '*';
@@ -74,13 +74,13 @@ axiosInstance.interceptors.response.use(response => response, err => {
         isRefreshing = true;
 
         return new Promise(function (resolve, reject) {
-            const {refresh_token} = getTokens();
-            axiosInstance.post(REFRESH_TOKEN_URL, {refresh_token})
+            const {refreshToken} = getTokens();
+            axiosInstance.post(REFRESH_TOKEN_URL, {refreshToken})
                 .then(({data}) => {
-                    const access_token = data.access_token;
-                    axiosInstance.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
-                    originalRequest.headers['Authorization'] = 'Bearer ' + access_token;
-                    saveTokens({access_token})
+                    const accessToken = data.accessToken;
+                    axiosInstance.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+                    originalRequest.headers['Authorization'] = 'Bearer ' + accessToken;
+                    saveTokens({accessToken})
                     processQueue(null, data);
                     resolve(axiosInstance(originalRequest));
                 })

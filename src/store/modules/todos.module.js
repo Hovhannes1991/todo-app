@@ -1,6 +1,6 @@
 import * as types from '../mutation-types';
 
-export const todos_store = {
+export const todosStore = {
     namespaced: true,
 
     state: () => ({
@@ -16,12 +16,12 @@ export const todos_store = {
             state.todos = [...state.todos, todo];
         },
 
-        [types.UPDATE_TODO](state, {id, updated_props}) {
+        [types.UPDATE_TODO](state, {id, updatedProps}) {
             const todos = [...state.todos];
             const index = todos.findIndex(todo => todo._id === id);
             if (index === -1) return;
 
-            todos[index] = {...todos[index], ...updated_props}
+            todos[index] = {...todos[index], ...updatedProps}
             state.todos = todos;
         },
 

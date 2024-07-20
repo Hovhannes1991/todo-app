@@ -1,7 +1,7 @@
 import * as types from '../mutation-types';
 import {getAllCountries} from "@/api/countries.service.js";
 
-export const countries_store = {
+export const countriesStore = {
     namespaced: true,
 
     state: () => {

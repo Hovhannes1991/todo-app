@@ -29,17 +29,17 @@ export default {
   emits: ["changeEmail", "confirmChangeEmail", "cancelChangeEmail", "removeBackendError"],
 
   created() {
-    this.user_data.new_email = this.user.email;
+    this.userData.newEmail = this.user.email;
   },
 
   data() {
     return {
-      user_data: {
-        new_email: "",
+      userData: {
+        newEmail: "",
 
         password: "",
 
-        confirmation_token: ""
+        confirmationToken: ""
       }
     }
   },
@@ -48,11 +48,11 @@ export default {
     ...mapGetters({user: "auth/user"}),
 
     errorMessages() {
-      const error_messages = {}
-      for (let key in this.user_data) {
-        error_messages[key] = this.v$.user_data[key]?.$errors?.[0]?.$message || this.backendErrors[key];
+      const errorMessages = {}
+      for (let key in this.userData) {
+        errorMessages[key] = this.v$.userData[key]?.$errors?.[0]?.$message || this.backendErrors[key];
       }
-      return error_messages;
+      return errorMessages;
     },
   },
 
@@ -60,13 +60,13 @@ export default {
     onChangeEmail() {
       if (!this.formIsValid()) return;
 
-      this.$emit("changeEmail", {new_email: this.user_data.new_email, password: this.user_data.password});
+      this.$emit("changeEmail", {newEmail: this.userData.newEmail, password: this.userData.password});
     },
 
     confirmChangeEmail() {
       if (!this.formIsValid()) return;
 
-      this.$emit("confirmChangeEmail", this.user_data.confirmation_token);
+      this.$emit("confirmChangeEmail", this.userData.confirmationToken);
     },
 
     cancelChangeEmail() {
@@ -87,16 +87,16 @@ export default {
   validations() {
     if (this.tokenSent) {
       return {
-        user_data: {
-          confirmation_token: {
+        userData: {
+          confirmationToken: {
             required: helpers.withMessage(() => this.$t("error__field_is_required"), required)
           },
         }
       }
     } else {
       return {
-        user_data: {
-          new_email: {
+        userData: {
+          newEmail: {
             required: helpers.withMessage(() => this.$t("error__field_is_required"), required),
             email: helpers.withMessage(() => this.$t("error__invalid_email_format"), email)
           },
@@ -118,12 +118,12 @@ export default {
   <form v-show="!tokenSent" @submit.prevent="onChangeEmail" autocomplete="on">
     <BaseInput v-model="user.email" :label="$t('old_email')" disabled/>
 
-    <BaseInput v-model="user_data.new_email"
-               @input="removeBackendError('new_email')"
+    <BaseInput v-model="userData.newEmail"
+               @input="removeBackendError('newEmail')"
                :label="$t('new_email')"
-               :error="errorMessages.new_email"
+               :error="errorMessages.newEmail"
                name="email"/>
-    <BaseInput v-model="user_data.password"
+    <BaseInput v-model="userData.password"
                @input="removeBackendError('password')"
                type="password"
                :label="$t('current_password')"
@@ -131,17 +131,18 @@ export default {
                name="current_password"/>
 
     <BaseButton :label="$t('change_email')"
-                :disabled="user.email === user_data.new_email"
+                :disabled="user.email === userData.newEmail"
                 type="submit"
                 variant="app-button"
                 :loading="loading"/>
   </form>
 
   <form v-show="tokenSent" @submit.prevent="confirmChangeEmail">
-    <p class="verification-token-info">Verification token is sent to mail {{ user_data.new_email }}</p>
-    <BaseInput v-model="user_data.confirmation_token"
-               @input="removeBackendError('confirmation_token')"
-               label="Token" :error="errorMessages.confirmation_token"
+    <p class="verification-token-info">Verification token is sent to mail {{ userData.newEmail }}</p>
+    <BaseInput v-model="userData.confirmationToken"
+               @input="removeBackendError('confirmationToken')"
+               :label="$t('token')"
+               :error="errorMessages.confirmationToken"
                name="email"/>
 
     <div class="buttons-wrapper">

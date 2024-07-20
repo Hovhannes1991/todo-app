@@ -32,13 +32,13 @@ export default {
         {name: "change_password", label: "change_password"},
         {name: "delete_account", label: "delete_account"}
       ],
-      active_tab: "personal_information",
+      activeTab: "personal_information",
 
-      email_verify_token_sent: false,
+      emailVerifyTokenSent: false,
 
       loading: false,
 
-      backend_errors: {}
+      backendErrors: {}
     }
   },
 
@@ -50,23 +50,23 @@ export default {
     ...mapMutations({updateUserProperty: "auth/UPDATE_USER_PROPERTY"}),
 
     changeTab(name) {
-      if (this.active_tab === name) return;
-      this.backend_errors = {};
-      this.active_tab = name;
+      if (this.activeTab === name) return;
+      this.backendErrors = {};
+      this.activeTab = name;
     },
 
     removeBackendError(name) {
-      this.backend_errors[name] = null;
+      this.backendErrors[name] = null;
     },
 
     handleBackendErrors(err) {
-      const backend_errors = err?.response?.data?.errors;
-      if (!backend_errors) {
+      const errorsFromBackend = err?.response?.data?.errors;
+      if (!errorsFromBackend) {
         toastError(this.$t('default_error_message'));
         return;
       }
-      backend_errors.forEach(({msg, path}) => {
-        this.backend_errors[path] = msg;
+      errorsFromBackend.forEach(({msg, path}) => {
+        this.backendErrors[path] = msg;
       })
     },
 
@@ -83,12 +83,12 @@ export default {
       this.loading = false;
     },
 
-    async onChangeEmail({new_email, password}) {
+    async onChangeEmail({newEmail, password}) {
       try {
         this.loading = true;
-        await changeEmail(new_email, password);
-        toastSuccess(`Verification token send to ${new_email}  email.`);
-        this.email_verify_token_sent = true;
+        await changeEmail(newEmail, password);
+        toastSuccess(`Verification token send to ${newEmail}  email.`);
+        this.emailVerifyTokenSent = true;
       } catch (err) {
         this.handleBackendErrors(err);
         console.log(err);
@@ -102,12 +102,12 @@ export default {
         const {data} = await changeEmailConfirm(token);
         toastSuccess(data.message);
         this.updateUserProperty({email: data.user.email});
-        this.email_verify_token_sent = false;
+        this.emailVerifyTokenSent = false;
       } catch (err) {
         console.log(err);
-        const token_error = err?.response?.data?.errors?.token;
-        if (token_error) {
-          this.backend_errors.confirmation_token = token_error;
+        const tokenError = err?.response?.data?.errors?.token;
+        if (tokenError) {
+          this.backendErrors.confirmationToken = tokenError;
         } else {
           toastError(this.$t('default_error_message'));
         }
@@ -115,16 +115,16 @@ export default {
       this.loading = false;
     },
 
-    async onChangePassword(old_password, new_password) {
+    async onChangePassword(oldPassword, newPassword) {
       try {
         this.loading = true;
-        const {data} = await changePassword(old_password, new_password);
+        const {data} = await changePassword(oldPassword, newPassword);
         toastSuccess(data.message);
       } catch (err) {
         console.log(err);
-        const password_error = err?.response?.data?.errors?.old_password;
-        if (password_error) {
-          this.backend_errors.old_password = password_error;
+        const passwordError = err?.response?.data?.errors?.oldPassword;
+        if (passwordError) {
+          this.backendErrors.oldPassword = passwordError;
         } else {
           toastError(this.$t('default_error_message'));
         }
@@ -136,12 +136,12 @@ export default {
       try {
         this.loading = true;
         const {data} = await deleteProfile();
-        const updated_data = {
-          is_deleted: data.is_deleted,
+        const updatedData = {
+          isDeleted: data.isDeleted,
           deletedAt: data.deletedAt,
           activeUntil: data.activeUntil
         }
-        this.updateUserProperty(updated_data);
+        this.updateUserProperty(updatedData);
       } catch (err) {
         console.log(err);
         toastError(this.$t('default_error_message'));
@@ -157,7 +157,7 @@ export default {
     <div class="tabs">
       <div v-for="tab in tabs"
            @click="changeTab(tab.name)"
-           :class="{tab: true, 'active-tab': tab.name === active_tab}"
+           :class="{tab: true, 'active-tab': tab.name === activeTab}"
            :key="tab">{{ $t(tab.label) }}
       </div>
     </div>
@@ -166,34 +166,34 @@ export default {
 
 
       <template v-if="user">
-        <div v-show="active_tab === 'personal_information'" class="content">
+        <div v-show="activeTab === 'personal_information'" class="content">
           <UpdatePersonalInfoForm
               @submit-personal-data="onSubmitPersonalData"
               @remove-backend-error="removeBackendError"
-              :backend-errors="backend_errors"
+              :backend-errors="backendErrors"
               :loading="loading"/>
         </div>
 
-        <div v-show="active_tab === 'change_email'" class="content">
+        <div v-show="activeTab === 'change_email'" class="content">
           <ChangeEmailForm
               @change-email="onChangeEmail"
               @confirm-change-email="confirmChangeEmail"
-              @cancel-change-email="email_verify_token_sent = false"
+              @cancel-change-email="emailVerifyTokenSent = false"
               @remove-backend-error="removeBackendError"
               :loading="loading"
-              :backend-errors="backend_errors"
-              :token-sent="email_verify_token_sent"/>
+              :backend-errors="backendErrors"
+              :token-sent="emailVerifyTokenSent"/>
         </div>
 
-        <div v-show="active_tab === 'change_password'" class="content">
+        <div v-show="activeTab === 'change_password'" class="content">
           <ChangePasswordForm
               @change-password="onChangePassword"
               @remove-backend-error="removeBackendError"
-              :backend-errors="backend_errors"
+              :backend-errors="backendErrors"
               :loading="loading"/>
         </div>
 
-        <div v-show="active_tab === 'delete_account'">
+        <div v-show="activeTab === 'delete_account'">
           <DeleteProfileForm @delete-profile="onDeleteProfile" :loading="loading"/>
         </div>
       </template>

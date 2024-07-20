@@ -13,8 +13,8 @@ export default {
     },
     type: {
       validator(value) {
-        const button_variants = ["text", "email", "password", "number", "date", "color"];
-        return button_variants.includes(value);
+        const buttonVariants = ["text", "email", "password", "number", "date", "color"];
+        return buttonVariants.includes(value);
       },
       default: "text"
     },
@@ -30,8 +30,8 @@ export default {
     },
     variant: {
       validator(value) {
-        const button_variants = ["underlined"];
-        return button_variants.includes(value);
+        const buttonVariants = ["underlined"];
+        return buttonVariants.includes(value);
       },
       required: false
     },
@@ -49,7 +49,7 @@ export default {
     },
     iconStyles: {
       type: Object,
-      default: {}
+      default: () => {}
     },
     error: {
       type: String,
@@ -75,10 +75,10 @@ export default {
 
   computed: {
     classNames() {
-      let class_name = "base-input";
-      if (this.error) class_name += " has-error";
-      if (this.icon) class_name += " with-icon";
-      return class_name;
+      let className = "base-input";
+      if (this.error) className += " has-error";
+      if (this.icon) className += " with-icon";
+      return className;
     },
 
     underlinedStyles() {
@@ -118,7 +118,7 @@ export default {
     <div class="input-container">
       <input
           @input="onInput($event.target.value)"
-          ref="input_ref"
+          ref="inputRef"
           :class="classNames"
           :value="modelValue"
           :type="type"
