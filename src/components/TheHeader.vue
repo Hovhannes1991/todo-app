@@ -1,7 +1,8 @@
 <script>
 import {defineAsyncComponent} from "vue";
-import {mapActions} from "vuex";
+import {mapGetters, mapActions} from "vuex";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+
 const SelectLocale = defineAsyncComponent(() => import("@/components/SelectLocale.vue"));
 export default {
   name: "TheHeader",
@@ -17,8 +18,23 @@ export default {
 
   data() {
     return {
-      showMobileMenu: false,
-      userMenuItems: [
+      showMobileMenu: false
+    }
+  },
+
+  computed: {
+    ...mapGetters({user: "auth/user"}),
+
+    emailIsVerified() {
+      return this.user?.emailIsVerified;
+    },
+
+    isDeleted() {
+      return this.user?.isDeleted;
+    },
+
+    availableUserMenuItems() {
+      if (this.emailIsVerified && !this.isDeleted) return [
         {
           label: "home",
           to: "home",
@@ -27,19 +43,29 @@ export default {
         {
           label: "profile",
           to: "profile",
-          icon: 'pi pi-home'
+          icon: 'pi pi-home',
         },
         {
           label: "settings",
           to: "settings",
-          icon: 'pi pi-star'
+          icon: 'pi pi-star',
         },
         {
           label: "logout",
           to: null,
           icon: 'pi pi-search',
           handler: "logoutHandler",
-          is_button: true
+          is_button: true,
+        }
+      ];
+
+      return [
+        {
+          label: "logout",
+          to: null,
+          icon: 'pi pi-search',
+          handler: "logoutHandler",
+          is_button: true,
         }
       ]
     }
@@ -83,7 +109,7 @@ export default {
           <button class="user-menu__btn">{{ $t('user_menu') }} &#9662;</button>
           <div class="dropdown">
             <ul>
-              <li v-for="item in userMenuItems">
+              <li v-for="item in availableUserMenuItems">
                 <button v-if="item.is_button" @click="menuItemClickHandler(item.handler)" type="button">
                   {{ $t(item.label) }}
                 </button>
@@ -97,7 +123,7 @@ export default {
           <FontAwesomeIcon icon="bars"/>
         </div>
         <ul :class="{'user-menu__mobile': true, 'opened': showMobileMenu}">
-          <li @click="toggleMenu" v-for="item in userMenuItems">
+          <li @click="toggleMenu" v-for="item in availableUserMenuItems">
             <button v-if="item.is_button" @click="menuItemClickHandler(item.handler)" type="button">
               {{ $t(item.label) }}
             </button>
