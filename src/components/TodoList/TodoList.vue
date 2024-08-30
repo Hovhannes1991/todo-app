@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       search: "",
-      ordeerBy: "asc",
+      orderByValue: "desc",
       filters: {
         status: []
       },
@@ -148,7 +148,7 @@ export default {
     },
 
     onOrderByChange() {
-      this.ordeerBy = this.ordeerBy === "asc" ? "desc" : "asc";
+      this.orderByValue = this.orderByValue === "asc" ? "desc" : "asc";
     },
 
     searchInTodos(todoList, searchText) {
@@ -169,7 +169,7 @@ export default {
     },
 
     orderBy(todoList) {
-      if (this.ordeerBy === "asc") {
+      if (this.orderByValue === "asc") {
         return todoList.toSorted((a, b) => a.updatedAt.localeCompare(b.updatedAt));
       } else {
         return todoList.toSorted((a, b) => b.updatedAt.localeCompare(a.updatedAt));
@@ -182,7 +182,7 @@ export default {
 <template>
   <main class="todo-list-component">
     <div class="todo-list-container">
-      <TodoListSearchAndFilter :order-by="ordeerBy"
+      <TodoListSearchAndFilter :order-by="orderByValue"
                                :filters="filters"
                                @search-change="onSearchChange"
                                @filter-change="onFilterChange"
