@@ -2,7 +2,6 @@
 import BaseInput from "@/ui/BaseInput.vue";
 import TodoListSort from "@/ui/SortBy.vue";
 import FilterBy from "@/ui/FilterBy.vue";
-import {filterOptions} from "@/services/options.service.js";
 
 export default {
   name: "TodoListSearchAndFilter",
@@ -15,7 +14,6 @@ export default {
   data() {
     return {
       search: "",
-      filterOptions: filterOptions(),
 
       searchIconStyles: {
         color: 'var(--app-black)'
@@ -30,6 +28,21 @@ export default {
 
     onFilterChange(filters) {
       this.$emit("filterChange", filters);
+    }
+  },
+
+  computed: {
+    filterOptions() {
+      return [
+        {
+          label: this.$t("status"),
+          code: "status",
+          items: [
+            {label: this.$t("completed"), value: "status-completed"},
+            {label: this.$t("pending"), value: "status-pending"}
+          ]
+        }
+      ];
     }
   },
 
